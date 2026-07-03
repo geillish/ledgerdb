@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Institution
+from finance.models import Institution
 
 
 @admin.register(Institution)
@@ -11,5 +11,5 @@ class InstitutionAdmin(admin.ModelAdmin):
         "date_updated",
     )
 
-    search_fields = ("name",)
     ordering = ("name",)
+    search_fields = ("name",)

@@ -9,5 +9,5 @@ class Institution(TimeStampedModel):
     class Meta:
         ordering = ["name"]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
