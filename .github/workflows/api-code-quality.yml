@@ -47,7 +47,7 @@ jobs:
       - name: Run Django tests
         working-directory: apps/api
         env:
-          DJANGO_SETTINGS_MODULE: config.settings_default
+          DJANGO_SETTINGS_MODULE: config.settings_test
         run: uv run python manage.py test finance
 
       - name: Show detailed statistics on failure
