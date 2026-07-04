@@ -1,10 +1,13 @@
 from django.db import models
 
-from core.models import TimeStampedModel
+from core.models import TimeStampedModel, UUIDModel
 
 
-class Institution(TimeStampedModel):
-    name = models.CharField(max_length=100)
+class Institution(UUIDModel, TimeStampedModel):
+    name = models.CharField(
+        max_length=100,
+        unique=True,
+    )
 
     class Meta:
         ordering = ["name"]
