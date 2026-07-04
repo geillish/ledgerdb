@@ -1,0 +1,234 @@
+# Set the maximum line length to 120 characters
+line-length = 120
+
+# Set the target Python version
+target-version = "py313"
+
+# Define files and directories to exclude from linting
+exclude = [
+    "__init__.py",
+    ".git",
+    ".venv",
+    "venv",
+    ".env",
+    "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    "node_modules",
+    "migrations",
+    "static",
+    "media",
+    ".DS_Store",
+    "*.pyc",
+    "*.pyo",
+    "*.pyd",
+    ".Python",
+    "build",
+    "develop-eggs",
+    "dist",
+    "downloads",
+    "eggs",
+    ".eggs",
+    "lib",
+    "lib64",
+    "parts",
+    "sdist",
+    "var",
+    "wheels",
+    "*.egg-info",
+    ".installed.cfg",
+    "*.egg",
+]
+
+[lint]
+select = [
+    "E",
+    "W",
+    "F",
+    "I",
+    "N",
+    "D",
+    "UP",
+    "YTT",
+    "ANN",
+    "S",
+    "BLE",
+    "FBT",
+    "B",
+    "A",
+    "COM",
+    "C4",
+    "DTZ",
+    "T10",
+    "DJ",
+    "EM",
+    "EXE",
+    "FA",
+    "ISC",
+    "ICN",
+    "G",
+    "INP",
+    "PIE",
+    "T20",
+    "PYI",
+    "PT",
+    "Q",
+    "RSE",
+    "RET",
+    "SLF",
+    "SLOT",
+    "SIM",
+    "TID",
+    "TCH",
+    "INT",
+    "ARG",
+    "PTH",
+    "TD",
+    "FIX",
+    "ERA",
+    "PD",
+    "PGH",
+    "PL",
+    "TRY",
+    "FLY",
+    "NPY",
+    "PERF",
+    "FURB",
+    "LOG",
+    "RUF",
+]
+
+ignore = [
+    "ANN401",
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D106",
+    "D107",
+    "D203",
+    "D212",
+    "D213",
+    "D400",
+    "D401",
+    "D415",
+    "E501",
+    "COM812",
+    "ISC001",
+    "Q000",
+    "Q001",
+    "Q002",
+    "Q003",
+    "W191",
+    "E111",
+    "E114",
+    "E117",
+    "S101",
+    "S105",
+    "S106",
+    "S107",
+    "S311",
+    "B008",
+    "B904",
+    "TD002",
+    "TD003",
+    "FIX002",
+    "PGH003",
+    "PLR0913",
+    "PLR2004",
+    "RET504",
+    "TRY003",
+    "EM101",
+    "EM102",
+    "FURB110",
+    "ERA001",
+    "RUF012",
+    "ANN",
+    "BLE",
+    "T201",
+    "S113",
+    "D",
+    "PTH122",
+    "PTH118",
+    "FBT002",
+    "ARG002",
+    "SLF001",
+    "PERF203",
+    "S110",
+    "SIM105",
+    "E722",
+    "PLC0415",
+    "PTH123",
+    "ARG003",
+    "I001",
+    "RUF059",
+    "N804",
+    "N805",
+    "PERF401",
+    "PLR0911",
+]
+
+fixable = ["ALL"]
+unfixable = []
+
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[lint.per-file-ignores]
+"*/settings*.py" = [
+    "F405",
+    "F403",
+]
+
+"*/test_*.py" = [
+    "S101",
+    "PLR2004",
+    "ANN201",
+    "ANN001",
+]
+
+"*/tests.py" = [
+    "S101",
+    "PLR2004",
+    "ANN201",
+    "ANN001",
+]
+
+"*/models.py" = [
+    "DJ008",
+]
+
+"*/admin.py" = [
+    "RUF012",
+]
+
+"*/apps.py" = [
+    "D101",
+]
+
+"*/urls.py" = [
+    "RUF005",
+]
+
+[lint.isort]
+known-first-party = ["config", "core", "finance"]
+known-third-party = ["django", "rest_framework"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+
+[lint.pydocstyle]
+convention = "google"
+
+[lint.flake8-quotes]
+inline-quotes = "double"
+multiline-quotes = "double"
+
+[lint.mccabe]
+max-complexity = 10
+
+[lint.pylint]
+max-args = 7
+max-branches = 12
+max-returns = 6
+max-statements = 50

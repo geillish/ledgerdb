@@ -1,0 +1,15 @@
+# LedgerDB - Local dev proxy (production-like routing)
+# Routes: / -> web, /api -> Django
+
+:8080 {
+
+    # API - Django
+    handle /api/* {
+        reverse_proxy localhost:8000
+    }
+
+    # Web (catch-all)
+    handle {
+        reverse_proxy localhost:3000
+    }
+}

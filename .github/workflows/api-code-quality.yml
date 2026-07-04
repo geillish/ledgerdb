@@ -1,0 +1,48 @@
+name: API Code Quality
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "apps/api/**"
+      - ".github/workflows/api-code-quality.yml"
+  pull_request:
+    branches: ["**"]
+    paths:
+      - "apps/api/**"
+      - ".github/workflows/api-code-quality.yml"
+
+jobs:
+  ruff-lint-and-format:
+    runs-on: ubuntu-latest
+    name: Ruff Code Quality Check
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install ruff
+        run: pip install ruff
+
+      - name: Display ruff version
+        run: ruff --version
+
+      - name: Run ruff linter
+        working-directory: apps/api
+        run: ruff check --config ruff.toml . --output-format=github
+
+      - name: Run ruff formatter check
+        working-directory: apps/api
+        run: ruff format --config ruff.toml --check .
+
+      - name: Show detailed statistics on failure
+        if: failure()
+        working-directory: apps/api
+        run: |
+          echo "Detailed linting statistics:"
+          ruff check --config ruff.toml . --statistics

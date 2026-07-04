@@ -5,5 +5,5 @@ from finance.serializers import TransactionSerializer
 
 
 class TransactionViewSet(ModelViewSet):
-    queryset = Transaction.objects.all()
+    queryset = Transaction.objects.select_related("account")
     serializer_class = TransactionSerializer

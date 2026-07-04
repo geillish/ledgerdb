@@ -1,0 +1,35 @@
+# LedgerDB - Local dev with proxy (production-like)
+# Run from project root: tilt up -f infra/tilt/Tiltfile
+
+update_settings(max_parallel_updates=10)
+
+# Project root = parent of infra/
+ROOT = "../.."
+
+# --- API (Django) ---
+local_resource(
+    "api",
+    serve_cmd="cd ../../apps/api && uv run python manage.py runserver 8000",
+    deps=["../../apps/api"],
+    links=[link("http://localhost:8000", "Django REST API")],
+)
+
+# --- Web (Next.js) ---
+local_resource(
+    "web",
+    serve_cmd="cd ../../apps/web && pnpm run dev",
+    env={"API_URL": "http://localhost:8080/api"},
+    links=[
+        link("http://localhost:8080", "Web via proxy"),
+        link("http://localhost:3000", "Web direct"),
+    ],
+)
+
+# --- Proxy (Caddy) ---
+local_resource(
+    "proxy",
+    serve_cmd="caddy run --config ../caddy/Caddyfile",
+    deps=["../caddy/Caddyfile"],
+    resource_deps=["api", "web"],
+    links=[link("http://localhost:8080", "LedgerDB proxy")],
+)

@@ -12,15 +12,11 @@ class GoalAdmin(admin.ModelAdmin):
         "target_date",
     )
 
-    list_filter = (
-        "account",
-    )
+    list_filter = ("account",)
 
     search_fields = (
         "name",
         "notes",
     )
 
-    ordering = (
-        "name",
-    )
+    ordering = ("name",)

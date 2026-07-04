@@ -7,6 +7,7 @@ from finance.choices import AccountType
 
 from .institution import Institution
 
+
 class Account(UUIDModel, TimeStampedModel):
     institution = models.ForeignKey(
         Institution,

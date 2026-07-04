@@ -5,5 +5,5 @@ from finance.serializers import AccountSerializer
 
 
 class AccountViewSet(ModelViewSet):
-    queryset = Account.objects.all()
+    queryset = Account.objects.select_related("institution")
     serializer_class = AccountSerializer

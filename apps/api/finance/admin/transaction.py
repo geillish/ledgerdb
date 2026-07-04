@@ -17,10 +17,6 @@ class TransactionAdmin(admin.ModelAdmin):
         "account",
     )
 
-    search_fields = (
-        "note",
-    )
+    search_fields = ("note",)
 
-    ordering = (
-        "-transaction_date",
-    )
+    ordering = ("-transaction_date",)

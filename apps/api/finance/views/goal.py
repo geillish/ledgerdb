@@ -5,5 +5,5 @@ from finance.serializers import GoalSerializer
 
 
 class GoalViewSet(ModelViewSet):
-    queryset = Goal.objects.all()
+    queryset = Goal.objects.select_related("account")
     serializer_class = GoalSerializer

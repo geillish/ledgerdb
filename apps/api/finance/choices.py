@@ -10,6 +10,7 @@ class AccountType(models.TextChoices):
     CRYPTO = "CRYPTO", "Crypto"
     CASH = "CASH", "Cash"
 
+
 class TransactionCategory(models.TextChoices):
     SALARY = "SALARY", "Salary"
     GROCERIES = "GROCERIES", "Groceries"
