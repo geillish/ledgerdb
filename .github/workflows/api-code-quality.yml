@@ -40,6 +40,16 @@ jobs:
         working-directory: apps/api
         run: ruff format --config ruff.toml --check .
 
+      - name: Install API dependencies
+        working-directory: apps/api
+        run: pip install uv && uv sync --dev
+
+      - name: Run Django tests
+        working-directory: apps/api
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings_default
+        run: uv run python manage.py test finance
+
       - name: Show detailed statistics on failure
         if: failure()
         working-directory: apps/api
