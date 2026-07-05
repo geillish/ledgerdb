@@ -1,8 +1,5 @@
-import { Plus } from 'lucide-react';
-
-import { ButtonLink } from '@/components/ui/button-link';
+import { CreateInstitutionDialog } from '@/components/institutions/CreateInstitutionDialog';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { routes } from '@/config/routes';
 
 export function InstitutionsEmpty() {
     return (
@@ -10,10 +7,7 @@ export function InstitutionsEmpty() {
             <CardHeader>
                 <CardTitle>No institutions yet</CardTitle>
                 <CardDescription>Add banks and financial institutions before creating accounts.</CardDescription>
-                <ButtonLink className="w-fit" href={routes.institutionsNew}>
-                    <Plus className="size-4" />
-                    Add institution
-                </ButtonLink>
+                <CreateInstitutionDialog className="w-fit" />
             </CardHeader>
         </Card>
     );

@@ -1,5 +1,7 @@
-import { InstitutionForm } from '@/components/institutions/InstitutionForm';
+import { redirect } from 'next/navigation';
+
+import { routes } from '@/config/routes';
 
 export default function NewInstitutionPage() {
-    return <InstitutionForm />;
+    redirect(routes.institutions);
 }

@@ -1,8 +1,7 @@
-import { getInstitutions } from '@/actions/institution';
-import { AccountForm } from '@/components/accounts/AccountForm';
+import { redirect } from 'next/navigation';
 
-export default async function NewAccountPage() {
-    const institutions = await getInstitutions();
+import { routes } from '@/config/routes';
 
-    return <AccountForm institutions={institutions} />;
+export default function NewAccountPage() {
+    redirect(routes.accounts);
 }
