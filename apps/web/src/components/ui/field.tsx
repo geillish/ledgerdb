@@ -15,10 +15,12 @@ export function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div className={cn("space-y-2", className)}>
+    <div className={cn("flex flex-col gap-3.5", className)}>
       <Label htmlFor={id}>{label}</Label>
-      {children}
-      {error && <p className="text-sm text-destructive">{error}</p>}
+      <div className="flex flex-col gap-2">
+        {children}
+        {error && <p className="text-sm text-destructive">{error}</p>}
+      </div>
     </div>
   );
 }

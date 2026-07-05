@@ -26,7 +26,7 @@ export function CreateInstitutionDialog({ label = 'Add institution', className }
                     <DialogTitle>New institution</DialogTitle>
                     <DialogDescription>Add a bank or financial institution.</DialogDescription>
                 </DialogHeader>
-                <form action={formAction} className="space-y-4">
+                <form action={formAction} className="space-y-5">
                     {state.message && <p className="text-sm text-destructive">{state.message}</p>}
 
                     <Field label="Name" id="institution-name" error={fieldError(state.errors, 'name')}>

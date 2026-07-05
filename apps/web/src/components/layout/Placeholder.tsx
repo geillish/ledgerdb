@@ -2,7 +2,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/ca
 
 export function Placeholder({ title, description }: { title: string; description: string }) {
     return (
-        <Card className="max-w-lg">
+        <Card className="max-w-lg shadow-sm">
             <CardHeader>
                 <CardTitle>{title}</CardTitle>
                 <CardDescription>{description}</CardDescription>

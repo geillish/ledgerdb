@@ -3,15 +3,18 @@
 import { usePathname } from 'next/navigation';
 
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
-import { getPageTitle } from '@/config/navigation';
+import { getPageMeta } from '@/config/navigation';
 
 export function Header() {
     const pathname = usePathname();
-    const title = getPageTitle(pathname);
+    const { title, description } = getPageMeta(pathname);
 
     return (
-        <header className="flex h-14 shrink-0 items-center justify-between border-b border-border bg-background px-6">
-            <h1 className="text-lg font-semibold tracking-tight">{title}</h1>
+        <header className="flex shrink-0 items-start justify-between gap-4 border-b border-border bg-background px-8 py-6">
+            <div className="space-y-2">
+                <h1 className="font-serif text-2xl font-semibold tracking-tight">{title}</h1>
+                <p className="max-w-2xl text-sm text-muted-foreground">{description}</p>
+            </div>
             <ThemeToggle />
         </header>
     );

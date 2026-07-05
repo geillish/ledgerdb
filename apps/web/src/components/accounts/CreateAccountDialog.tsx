@@ -35,7 +35,7 @@ export function CreateAccountDialog({ institutions, label = 'Add account', class
                             <DialogTitle>New account</DialogTitle>
                             <DialogDescription>Add a financial account linked to an institution.</DialogDescription>
                         </DialogHeader>
-                        <form action={formAction} className="space-y-4">
+                        <form action={formAction} className="space-y-5">
                             {state.message && <p className="text-sm text-destructive">{state.message}</p>}
 
                             <Field label="Institution" id="account-institution" error={fieldError(state.errors, 'institution')}>

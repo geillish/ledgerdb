@@ -31,7 +31,7 @@ export function EditAccountDialog({ account, institutions, open, onOpenChange }:
                     <DialogTitle>Edit account</DialogTitle>
                     <DialogDescription>Update account details.</DialogDescription>
                 </DialogHeader>
-                <form key={account.id} action={formAction} className="space-y-4">
+                <form key={account.id} action={formAction} className="space-y-5">
                     {state.message && <p className="text-sm text-destructive">{state.message}</p>}
 
                     <input type="hidden" name="id" value={account.id} />

@@ -27,7 +27,7 @@ export function EditInstitutionDialog({ institution, open, onOpenChange }: EditI
                     <DialogTitle>Edit institution</DialogTitle>
                     <DialogDescription>Update the institution name.</DialogDescription>
                 </DialogHeader>
-                <form key={institution.id} action={formAction} className="space-y-4">
+                <form key={institution.id} action={formAction} className="space-y-5">
                     {state.message && <p className="text-sm text-destructive">{state.message}</p>}
 
                     <input type="hidden" name="id" value={institution.id} />
