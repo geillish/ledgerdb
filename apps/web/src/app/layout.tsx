@@ -1,16 +1,28 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Eczar, Nunito, Quicksand, Special_Elite } from 'next/font/google';
 
 import { AppLayout } from '@/components/layout/AppLayout';
+import { ThemeProvider } from '@/components/theme-provider';
 import '../styles/globals.css';
 
-const geistSans = Geist({
-    variable: '--font-geist-sans',
+const quicksand = Quicksand({
+    variable: '--font-quicksand',
     subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
-    variable: '--font-geist-mono',
+const nunito = Nunito({
+    variable: '--font-nunito',
+    subsets: ['latin'],
+});
+
+const eczar = Eczar({
+    variable: '--font-eczar',
+    subsets: ['latin'],
+});
+
+const specialElite = Special_Elite({
+    weight: '400',
+    variable: '--font-special-elite',
     subsets: ['latin'],
 });
 
@@ -25,9 +37,11 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+        <html lang="en" className={`${quicksand.variable} ${nunito.variable} ${eczar.variable} ${specialElite.variable} h-full antialiased`} suppressHydrationWarning>
             <body className="min-h-full flex flex-col">
-                <AppLayout>{children}</AppLayout>
+                <ThemeProvider>
+                    <AppLayout>{children}</AppLayout>
+                </ThemeProvider>
             </body>
         </html>
     );

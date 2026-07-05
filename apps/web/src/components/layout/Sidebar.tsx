@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { navigation, isActiveRoute } from '@/config/navigation';
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { routes } from '@/config/routes';
 import { cn } from '@/lib/utils';
 
@@ -35,6 +36,10 @@ export function Sidebar() {
                     );
                 })}
             </nav>
+
+            <div className="border-t border-sidebar-border p-3">
+                <ThemeToggle showLabel />
+            </div>
         </aside>
     );
 }
