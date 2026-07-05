@@ -42,6 +42,25 @@ class InstitutionAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("name", response.json())
 
+    def test_update_institution(self):
+        institution = Institution.objects.create(name="Barclays")
+        detail_url = reverse("institution-detail", kwargs={"pk": institution.pk})
+
+        response = self.client.put(detail_url, {"name": "Monzo"}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()["name"], "Monzo")
+
+    def test_search_institutions_by_name(self):
+        Institution.objects.create(name="Barclays")
+        Institution.objects.create(name="Monzo")
+
+        response = self.client.get(self.list_url, {"search": "mon"})
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(response.json()[0]["name"], "Monzo")
+
     def test_delete_institution(self):
         institution = Institution.objects.create(name="Barclays")
         detail_url = reverse("institution-detail", kwargs={"pk": institution.pk})

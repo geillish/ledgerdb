@@ -1,5 +1,5 @@
-import { Placeholder } from '@/components/layout/Placeholder';
+import { InstitutionForm } from '@/components/institutions/InstitutionForm';
 
 export default function NewInstitutionPage() {
-    return <Placeholder title="New institution" description="Institution creation is coming in the next milestone." />;
+    return <InstitutionForm />;
 }
