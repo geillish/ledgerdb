@@ -1,8 +1,5 @@
-import Link from 'next/link';
-
-import { DeleteInstitutionButton } from '@/components/institutions/DeleteInstitutionButton';
+import { InstitutionRowActions } from '@/components/institutions/InstitutionRowActions';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { routes } from '@/config/routes';
 import { formatDate } from '@/lib/format';
 import type { Institution } from '@/types/institution';
 
@@ -22,12 +19,7 @@ export function InstitutionTable({ institutions }: { institutions: Institution[]
                         <TableCell className="font-medium">{institution.name}</TableCell>
                         <TableCell>{formatDate(institution.date_created)}</TableCell>
                         <TableCell className="text-right">
-                            <div className="flex items-center justify-end gap-2">
-                                <Link href={routes.institutionEdit(institution.id)} className="text-sm font-medium hover:underline">
-                                    Edit
-                                </Link>
-                                <DeleteInstitutionButton id={institution.id} name={institution.name} />
-                            </div>
+                            <InstitutionRowActions id={institution.id} name={institution.name} />
                         </TableCell>
                     </TableRow>
                 ))}

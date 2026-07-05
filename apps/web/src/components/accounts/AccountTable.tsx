@@ -1,5 +1,6 @@
+import { AccountTypeBadge } from '@/components/accounts/AccountTypeBadge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { formatAccountType, formatCurrency } from '@/lib/format';
+import { formatCurrency } from '@/lib/format';
 import type { Account } from '@/types/account';
 
 export function AccountTable({ accounts }: { accounts: Account[] }) {
@@ -18,7 +19,9 @@ export function AccountTable({ accounts }: { accounts: Account[] }) {
                     <TableRow key={account.id}>
                         <TableCell className="font-medium">{account.name}</TableCell>
                         <TableCell>{account.institution_name}</TableCell>
-                        <TableCell>{formatAccountType(account.account_type)}</TableCell>
+                        <TableCell>
+                            <AccountTypeBadge type={account.account_type} />
+                        </TableCell>
                         <TableCell className="text-right tabular-nums">{formatCurrency(account.opening_balance)}</TableCell>
                     </TableRow>
                 ))}
