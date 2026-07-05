@@ -22,7 +22,7 @@ class Account(UUIDModel, TimeStampedModel):
         choices=AccountType.choices,
     )
 
-    opening_balance = models.DecimalField(
+    current_balance = models.DecimalField(
         max_digits=12,
         decimal_places=2,
         default=Decimal("0.00"),

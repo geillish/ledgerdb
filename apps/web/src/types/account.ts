@@ -18,7 +18,7 @@ export type Account = {
     institution_name: string;
     name: string;
     account_type: AccountType;
-    opening_balance: string;
+    current_balance: string;
     notes: string;
     date_created: string;
     date_updated: string;
@@ -28,8 +28,8 @@ export type CreateAccountInput = {
     institution: string;
     name: string;
     account_type: AccountType;
-    opening_balance: string;
+    current_balance: string;
     notes?: string;
 };
 
-export type UpdateAccountInput = CreateAccountInput;
+export type UpdateAccountInput = Omit<CreateAccountInput, 'current_balance'>;

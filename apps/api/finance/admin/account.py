@@ -9,7 +9,7 @@ class AccountAdmin(admin.ModelAdmin):
         "name",
         "institution",
         "account_type",
-        "opening_balance",
+        "current_balance",
     )
 
     list_filter = (

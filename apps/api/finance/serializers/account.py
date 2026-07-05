@@ -9,3 +9,7 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = "__all__"
+
+    def update(self, instance, validated_data):
+        validated_data.pop("current_balance", None)
+        return super().update(instance, validated_data)

@@ -60,10 +60,6 @@ export function EditAccountDialog({ account, institutions, open, onOpenChange }:
                         </Select>
                     </Field>
 
-                    <Field label="Opening balance" id={`account-opening-balance-${account.id}`} error={fieldError(state.errors, 'opening_balance')}>
-                        <Input id={`account-opening-balance-${account.id}`} name="opening_balance" type="number" step="0.01" required defaultValue={account.opening_balance} />
-                    </Field>
-
                     <Field label="Notes" id={`account-notes-${account.id}`} error={fieldError(state.errors, 'notes')}>
                         <Textarea id={`account-notes-${account.id}`} name="notes" rows={3} placeholder="Optional notes" defaultValue={account.notes} />
                     </Field>

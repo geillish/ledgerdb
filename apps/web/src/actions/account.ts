@@ -26,7 +26,7 @@ export async function createAccount(_prevState: ActionState = initialActionState
         institution: parsed.data.institution,
         name: parsed.data.name,
         account_type: parsed.data.account_type,
-        opening_balance: parsed.data.opening_balance,
+        current_balance: parsed.data.current_balance,
         notes: parsed.data.notes?.trim() ?? '',
     };
 
@@ -63,12 +63,11 @@ export async function updateAccount(_prevState: ActionState = initialActionState
         institution: parsed.data.institution,
         name: parsed.data.name,
         account_type: parsed.data.account_type,
-        opening_balance: parsed.data.opening_balance,
         notes: parsed.data.notes?.trim() ?? '',
     };
 
     try {
-        await api.put(`/accounts/${id}/`, input);
+        await api.patch(`/accounts/${id}/`, input);
     } catch (error) {
         const fieldErrors = getApiFieldErrors(error);
 

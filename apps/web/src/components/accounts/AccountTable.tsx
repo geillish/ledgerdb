@@ -13,7 +13,7 @@ export function AccountTable({ accounts, institutions }: { accounts: Account[]; 
                     <TableHead>Name</TableHead>
                     <TableHead>Institution</TableHead>
                     <TableHead>Type</TableHead>
-                    <TableHead className="text-right">Opening Balance</TableHead>
+                    <TableHead className="text-right">Current Balance</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
             </TableHeader>
@@ -25,7 +25,7 @@ export function AccountTable({ accounts, institutions }: { accounts: Account[]; 
                         <TableCell>
                             <AccountTypeBadge type={account.account_type} />
                         </TableCell>
-                        <TableCell className="text-right tabular-nums">{formatCurrency(account.opening_balance)}</TableCell>
+                        <TableCell className="text-right tabular-nums">{formatCurrency(account.current_balance)}</TableCell>
                         <TableCell className="text-right">
                             <AccountRowActions account={account} institutions={institutions} />
                         </TableCell>

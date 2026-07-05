@@ -65,8 +65,8 @@ export function CreateAccountDialog({ institutions, label = 'Add account', class
                                 </Select>
                             </Field>
 
-                            <Field label="Opening balance" id="account-opening-balance" error={fieldError(state.errors, 'opening_balance')}>
-                                <Input id="account-opening-balance" name="opening_balance" type="number" step="0.01" required defaultValue="0.00" />
+                            <Field label="Current balance" id="account-current-balance" error={fieldError(state.errors, 'current_balance')}>
+                                <Input id="account-current-balance" name="current_balance" type="number" step="0.01" required defaultValue="0.00" />
                             </Field>
 
                             <Field label="Notes" id="account-notes" error={fieldError(state.errors, 'notes')}>

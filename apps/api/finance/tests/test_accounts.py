@@ -22,7 +22,7 @@ class AccountAPITests(APITestCase):
             institution=self.institution,
             name="Current",
             account_type=AccountType.CURRENT,
-            opening_balance="1250.50",
+            current_balance="1250.50",
         )
 
         response = self.client.get(self.list_url)
@@ -39,7 +39,7 @@ class AccountAPITests(APITestCase):
             "institution": str(self.institution.pk),
             "name": "Savings",
             "account_type": AccountType.SAVINGS,
-            "opening_balance": "5000.00",
+            "current_balance": "5000.00",
             "notes": "Emergency fund",
         }
 
@@ -69,23 +69,23 @@ class AccountAPITests(APITestCase):
             institution=self.institution,
             name="Current",
             account_type=AccountType.CURRENT,
-            opening_balance="100.00",
+            current_balance="100.00",
         )
         detail_url = reverse("account-detail", kwargs={"pk": account.pk})
         payload = {
             "institution": str(self.institution.pk),
             "name": "Main Current",
             "account_type": AccountType.SAVINGS,
-            "opening_balance": "250.00",
             "notes": "Updated",
         }
 
-        response = self.client.put(detail_url, payload, format="json")
+        response = self.client.patch(detail_url, payload, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["name"], "Main Current")
         self.assertEqual(response.json()["account_type"], AccountType.SAVINGS)
-        self.assertEqual(response.json()["opening_balance"], "250.00")
+        self.assertEqual(response.json()["current_balance"], "100.00")
+        self.assertEqual(response.json()["notes"], "Updated")
 
     def test_delete_account(self):
         account = Account.objects.create(
