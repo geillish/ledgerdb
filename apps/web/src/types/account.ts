@@ -31,3 +31,5 @@ export type CreateAccountInput = {
     opening_balance: string;
     notes?: string;
 };
+
+export type UpdateAccountInput = CreateAccountInput;

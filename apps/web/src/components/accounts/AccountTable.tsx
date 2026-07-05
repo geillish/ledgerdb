@@ -1,9 +1,11 @@
+import { AccountRowActions } from '@/components/accounts/AccountRowActions';
 import { AccountTypeBadge } from '@/components/accounts/AccountTypeBadge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatCurrency } from '@/lib/format';
 import type { Account } from '@/types/account';
+import type { Institution } from '@/types/institution';
 
-export function AccountTable({ accounts }: { accounts: Account[] }) {
+export function AccountTable({ accounts, institutions }: { accounts: Account[]; institutions: Institution[] }) {
     return (
         <Table>
             <TableHeader>
@@ -12,6 +14,7 @@ export function AccountTable({ accounts }: { accounts: Account[] }) {
                     <TableHead>Institution</TableHead>
                     <TableHead>Type</TableHead>
                     <TableHead className="text-right">Opening Balance</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -23,6 +26,9 @@ export function AccountTable({ accounts }: { accounts: Account[] }) {
                             <AccountTypeBadge type={account.account_type} />
                         </TableCell>
                         <TableCell className="text-right tabular-nums">{formatCurrency(account.opening_balance)}</TableCell>
+                        <TableCell className="text-right">
+                            <AccountRowActions account={account} institutions={institutions} />
+                        </TableCell>
                     </TableRow>
                 ))}
             </TableBody>

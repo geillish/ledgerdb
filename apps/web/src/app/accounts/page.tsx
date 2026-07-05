@@ -14,7 +14,7 @@ export default async function AccountsPage() {
                 <CreateAccountDialog institutions={institutions} />
             </div>
 
-            {accounts.length === 0 ? <AccountsEmpty institutions={institutions} /> : <AccountTable accounts={accounts} />}
+            {accounts.length === 0 ? <AccountsEmpty institutions={institutions} /> : <AccountTable accounts={accounts} institutions={institutions} />}
         </div>
     );
 }

@@ -63,3 +63,65 @@ class AccountAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["name"], "Current")
         self.assertEqual(response.json()["institution_name"], "Barclays")
+
+    def test_update_account(self):
+        account = Account.objects.create(
+            institution=self.institution,
+            name="Current",
+            account_type=AccountType.CURRENT,
+            opening_balance="100.00",
+        )
+        detail_url = reverse("account-detail", kwargs={"pk": account.pk})
+        payload = {
+            "institution": str(self.institution.pk),
+            "name": "Main Current",
+            "account_type": AccountType.SAVINGS,
+            "opening_balance": "250.00",
+            "notes": "Updated",
+        }
+
+        response = self.client.put(detail_url, payload, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()["name"], "Main Current")
+        self.assertEqual(response.json()["account_type"], AccountType.SAVINGS)
+        self.assertEqual(response.json()["opening_balance"], "250.00")
+
+    def test_delete_account(self):
+        account = Account.objects.create(
+            institution=self.institution,
+            name="Current",
+            account_type=AccountType.CURRENT,
+        )
+        detail_url = reverse("account-detail", kwargs={"pk": account.pk})
+
+        response = self.client.delete(detail_url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Account.objects.count(), 0)
+
+    def test_delete_account_with_transactions_returns_409(self):
+        from finance.choices import TransactionCategory
+        from finance.models import Transaction
+
+        account = Account.objects.create(
+            institution=self.institution,
+            name="Current",
+            account_type=AccountType.CURRENT,
+        )
+        Transaction.objects.create(
+            account=account,
+            transaction_date="2025-01-01",
+            category=TransactionCategory.GROCERIES,
+            amount="10.00",
+        )
+        detail_url = reverse("account-detail", kwargs={"pk": account.pk})
+
+        response = self.client.delete(detail_url)
+
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+        self.assertEqual(
+            response.json()["detail"],
+            "Cannot delete account with linked transactions or goals.",
+        )
+        self.assertEqual(Account.objects.count(), 1)

@@ -12,3 +12,7 @@ export const createAccountSchema = z.object({
         .refine(value => !Number.isNaN(Number(value)), 'Enter a valid amount'),
     notes: z.string().optional(),
 });
+
+export const updateAccountSchema = createAccountSchema.extend({
+    id: z.string().uuid(),
+});
