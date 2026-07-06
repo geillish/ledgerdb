@@ -2,7 +2,6 @@
 
 import { MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -14,20 +13,17 @@ type ThemeToggleProps = {
 
 export function ThemeToggle({ showLabel = false, className }: ThemeToggleProps) {
     const { resolvedTheme, setTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    const isDark = mounted && resolvedTheme === 'dark';
-    const label = isDark ? 'Light mode' : 'Dark mode';
-    const Icon = isDark ? SunIcon : MoonIcon;
 
     return (
-        <Button type="button" variant="outline" size={showLabel ? 'sm' : 'icon-sm'} className={cn(showLabel && 'w-full justify-start gap-2', className)} aria-label="Toggle theme" onClick={() => setTheme(isDark ? 'light' : 'dark')}>
-            <Icon />
-            {showLabel ? <span>{label}</span> : null}
+        <Button type="button" variant="outline" size={showLabel ? 'sm' : 'icon-sm'} className={cn(showLabel && 'w-full justify-start gap-2', className)} aria-label="Toggle theme" onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
+            <SunIcon className="hidden dark:block" />
+            <MoonIcon className="dark:hidden" />
+            {showLabel ? (
+                <>
+                    <span className="hidden dark:inline">Light mode</span>
+                    <span className="dark:hidden">Dark mode</span>
+                </>
+            ) : null}
         </Button>
     );
 }
