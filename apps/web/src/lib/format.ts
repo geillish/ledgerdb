@@ -1,4 +1,5 @@
 import { ACCOUNT_TYPE_LABELS, type AccountType } from '@/types/account';
+import { TRANSACTION_CATEGORY_LABELS, type TransactionCategory } from '@/types/transaction';
 
 export function formatCurrency(amount: string | number): string {
     const value = typeof amount === 'string' ? parseFloat(amount) : amount;
@@ -11,6 +12,10 @@ export function formatCurrency(amount: string | number): string {
 
 export function formatAccountType(type: AccountType): string {
     return ACCOUNT_TYPE_LABELS[type];
+}
+
+export function formatTransactionCategory(category: TransactionCategory): string {
+    return TRANSACTION_CATEGORY_LABELS[category];
 }
 
 export function formatDate(value: string): string {

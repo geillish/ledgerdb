@@ -5,6 +5,7 @@ export const routes = {
     institutions: '/institutions',
     institutionsNew: '/institutions/new',
     transactions: '/transactions',
+    transactionsNew: '/transactions/new',
     goals: '/goals',
     dashboard: '/dashboard',
 } as const;
