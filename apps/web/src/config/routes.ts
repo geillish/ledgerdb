@@ -7,5 +7,6 @@ export const routes = {
     transactions: '/transactions',
     transactionsNew: '/transactions/new',
     goals: '/goals',
+    goalsNew: '/goals/new',
     dashboard: '/dashboard',
 } as const;
