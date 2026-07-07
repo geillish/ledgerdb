@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 from finance.views import (
     AccountViewSet,
+    DashboardView,
     GoalViewSet,
     InstitutionViewSet,
     TransactionViewSet,
@@ -17,5 +18,6 @@ router.register("transactions", TransactionViewSet)
 router.register("goals", GoalViewSet)
 
 urlpatterns = [
+    path("dashboard/", DashboardView.as_view(), name="dashboard"),
     path("", include(router.urls)),
 ]
