@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -48,6 +50,9 @@ class AccountAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.json()["name"], "Savings")
         self.assertEqual(response.json()["institution_name"], "Barclays")
+        account = Account.objects.get(name="Savings")
+        self.assertEqual(account.opening_balance, Decimal("5000.00"))
+        self.assertEqual(account.current_balance, Decimal("5000.00"))
         self.assertEqual(Account.objects.count(), 1)
 
     def test_retrieve_account(self):

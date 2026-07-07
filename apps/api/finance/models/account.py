@@ -28,6 +28,12 @@ class Account(UUIDModel, TimeStampedModel):
         default=Decimal("0.00"),
     )
 
+    opening_balance = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        default=Decimal("0.00"),
+    )
+
     notes = models.TextField(
         blank=True,
     )

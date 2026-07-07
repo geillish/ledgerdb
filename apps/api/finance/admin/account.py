@@ -9,8 +9,11 @@ class AccountAdmin(admin.ModelAdmin):
         "name",
         "institution",
         "account_type",
+        "opening_balance",
         "current_balance",
     )
+
+    readonly_fields = ("current_balance",)
 
     list_filter = (
         "institution",
