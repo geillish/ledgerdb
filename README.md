@@ -2,6 +2,24 @@
 
 A personal finance tracker built as a portfolio project. Track accounts, institutions, transactions, and savings goals, then review everything on a dashboard with spending charts and net worth.
 
+## Preview
+
+> Add `dashboard.png` and `transactions.gif` to [`docs/images/`](docs/images/) — see that folder for capture notes.
+
+<p align="center">
+  <img src="docs/images/dashboard.png" alt="LedgerDB dashboard showing net worth, spending charts, and goal progress" width="720" />
+</p>
+
+<p align="center">
+  <img src="docs/images/transactions.gif" alt="LedgerDB transactions list with filters and create modal" width="720" />
+</p>
+
+## Why I built this
+
+I wanted a portfolio project that felt like a real app, not a tutorial clone. LedgerDB gave me a focused domain — personal finance — with enough depth to exercise full-stack design without boiling the ocean.
+
+The goal was to ship one feature at a time (accounts, then institutions, transactions, goals, dashboard), add backend fields only when the UI needed them, and keep a clear separation: Server Components and pages stay thin, server actions own API communication, and components stay presentation-only. That mirrors how I'd approach a production codebase: incremental delivery, testable API boundaries, and conventions you can follow without reading every file.
+
 ## Features
 
 - **Dashboard** — net worth, monthly income and spending, six-month spending trend, category breakdown, account balances, and goal progress
@@ -19,6 +37,35 @@ A personal finance tracker built as a portfolio project. Track accounts, institu
 | Infra | Caddy (local proxy), Tilt (orchestration) |
 | CI | Ruff, Django tests, Biome, ESLint, Next.js build |
 
+## Architecture
+
+```mermaid
+flowchart LR
+    Browser["Browser"]
+    Next["Next.js\nApp Router"]
+    Actions["Server Actions\nsrc/actions/*"]
+    API["Django REST API\n/api/*"]
+    DB[(PostgreSQL)]
+
+    Browser -->|"page request"| Next
+    Next -->|"getAccounts(), getDashboard(), …"| Actions
+    Actions -->|"axios (server-side)"| API
+    API --> DB
+    Next -->|"props"| Browser
+```
+
+Pages are Server Components with almost no logic. Data flows in one direction:
+
+```
+page.tsx → actions/* → Django API → components
+```
+
+- **Pages** fetch data via server actions and pass props to components
+- **Actions** own all API calls (axios, one file per domain)
+- **Components** are presentation-only — no fetching
+
+Mutations use server actions with `useActionState`, Zod validation, and DRF error mapping.
+
 ## Repository structure
 
 ```
@@ -26,6 +73,8 @@ ledgerdb/
 ├── apps/
 │   ├── api/          # Django REST API
 │   └── web/          # Next.js frontend
+├── docs/
+│   └── images/       # README screenshots and GIFs
 ├── infra/
 │   ├── caddy/        # Local reverse proxy
 │   └── tilt/         # Dev environment orchestration
@@ -52,25 +101,11 @@ api/
 web/src/
 ├── actions/          # Server actions — all API communication
 ├── app/              # App Router pages (Server Components)
-├── components/     # Presentation components
+├── components/       # Presentation components
 ├── config/           # Routes, navigation, API URL
 ├── lib/              # Utilities, Zod schemas, error helpers
 └── types/            # TypeScript types per domain
 ```
-
-## Architecture
-
-Pages are Server Components with almost no logic. Data flows in one direction:
-
-```
-page.tsx → actions/* → Django API → components
-```
-
-- **Pages** fetch data via server actions and pass props to components
-- **Actions** own all API calls (axios, one file per domain)
-- **Components** are presentation-only — no fetching
-
-Mutations use server actions with `useActionState`, Zod validation, and DRF error mapping.
 
 ## API endpoints
 
