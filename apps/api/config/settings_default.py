@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "rest_framework",
     # Local
     "core",
-    "finance",
+    "finance.apps.FinanceConfig",
 ]
 
 MIDDLEWARE = [

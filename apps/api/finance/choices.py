@@ -13,6 +13,8 @@ class AccountType(models.TextChoices):
 
 class TransactionCategory(models.TextChoices):
     SALARY = "SALARY", "Salary"
+    OTHER_INCOME = "OTHER_INCOME", "Other"
+    TRANSFER_IN = "TRANSFER_IN", "Transfer in"
     GROCERIES = "GROCERIES", "Groceries"
     RENT = "RENT", "Rent"
     MORTGAGE = "MORTGAGE", "Mortgage"
@@ -25,5 +27,5 @@ class TransactionCategory(models.TextChoices):
     SAVINGS = "SAVINGS", "Savings"
     PENSION = "PENSION", "Pension"
     INVESTMENT = "INVESTMENT", "Investment"
-    TRANSFER = "TRANSFER", "Transfer"
-    OTHER = "OTHER", "Other"
+    TRANSFER_OUT = "TRANSFER_OUT", "Transfer out"
+    OTHER = "OTHER", "Other expense"

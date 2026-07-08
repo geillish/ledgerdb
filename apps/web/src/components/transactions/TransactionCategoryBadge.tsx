@@ -4,6 +4,8 @@ import type { TransactionCategory } from '@/types/transaction';
 
 const CATEGORY_VARIANTS: Record<TransactionCategory, 'default' | 'secondary' | 'outline'> = {
     SALARY: 'default',
+    OTHER_INCOME: 'default',
+    TRANSFER_IN: 'outline',
     GROCERIES: 'secondary',
     RENT: 'secondary',
     MORTGAGE: 'secondary',
@@ -16,7 +18,7 @@ const CATEGORY_VARIANTS: Record<TransactionCategory, 'default' | 'secondary' | '
     SAVINGS: 'outline',
     PENSION: 'outline',
     INVESTMENT: 'outline',
-    TRANSFER: 'outline',
+    TRANSFER_OUT: 'outline',
     OTHER: 'secondary',
 };
 

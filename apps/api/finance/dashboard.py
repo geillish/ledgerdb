@@ -5,11 +5,10 @@ from decimal import Decimal
 from django.db.models import Sum
 from django.db.models.functions import TruncMonth
 
-from finance.choices import AccountType, TransactionCategory
+from finance.category_groups import EXCLUDED_FROM_SPENDING, INCOME_CATEGORIES
+from finance.choices import AccountType
 from finance.models import Account, Goal, Transaction
 
-INCOME_CATEGORIES = {TransactionCategory.SALARY}
-EXCLUDED_FROM_SPENDING = {TransactionCategory.SALARY, TransactionCategory.TRANSFER}
 LIABILITY_ACCOUNT_TYPES = {AccountType.CREDIT_CARD, AccountType.LOAN}
 SPENDING_MONTHS = 6
 

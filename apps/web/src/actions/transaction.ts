@@ -56,6 +56,9 @@ export async function createTransaction(_prevState: ActionState = initialActionS
     }
 
     revalidatePath(routes.transactions);
+    revalidatePath(routes.accounts);
+    revalidatePath(routes.goals);
+    revalidatePath(routes.home);
     redirect(routes.transactions);
 }
 
@@ -93,6 +96,9 @@ export async function updateTransaction(_prevState: ActionState = initialActionS
     }
 
     revalidatePath(routes.transactions);
+    revalidatePath(routes.accounts);
+    revalidatePath(routes.goals);
+    revalidatePath(routes.home);
     redirect(routes.transactions);
 }
 
@@ -110,5 +116,8 @@ export async function deleteTransaction(_prevState: ActionState = initialActionS
     }
 
     revalidatePath(routes.transactions);
+    revalidatePath(routes.accounts);
+    revalidatePath(routes.goals);
+    revalidatePath(routes.home);
     redirect(routes.transactions);
 }

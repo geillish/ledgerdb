@@ -1,9 +1,29 @@
-export const TRANSACTION_CATEGORIES = ['SALARY', 'GROCERIES', 'RENT', 'MORTGAGE', 'BILLS', 'TRANSPORT', 'SHOPPING', 'DINING', 'HEALTH', 'ENTERTAINMENT', 'SAVINGS', 'PENSION', 'INVESTMENT', 'TRANSFER', 'OTHER'] as const;
+export const TRANSACTION_CATEGORIES = [
+    'SALARY',
+    'OTHER_INCOME',
+    'TRANSFER_IN',
+    'GROCERIES',
+    'RENT',
+    'MORTGAGE',
+    'BILLS',
+    'TRANSPORT',
+    'SHOPPING',
+    'DINING',
+    'HEALTH',
+    'ENTERTAINMENT',
+    'SAVINGS',
+    'PENSION',
+    'INVESTMENT',
+    'TRANSFER_OUT',
+    'OTHER',
+] as const;
 
 export type TransactionCategory = (typeof TRANSACTION_CATEGORIES)[number];
 
 export const TRANSACTION_CATEGORY_LABELS: Record<TransactionCategory, string> = {
     SALARY: 'Salary',
+    OTHER_INCOME: 'Other',
+    TRANSFER_IN: 'Transfer in',
     GROCERIES: 'Groceries',
     RENT: 'Rent',
     MORTGAGE: 'Mortgage',
@@ -16,8 +36,8 @@ export const TRANSACTION_CATEGORY_LABELS: Record<TransactionCategory, string> = 
     SAVINGS: 'Savings',
     PENSION: 'Pension',
     INVESTMENT: 'Investment',
-    TRANSFER: 'Transfer',
-    OTHER: 'Other',
+    TRANSFER_OUT: 'Transfer out',
+    OTHER: 'Other expense',
 };
 
 export type Transaction = {

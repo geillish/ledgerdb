@@ -73,7 +73,7 @@ class DashboardAPITests(APITestCase):
         Transaction.objects.create(
             account=account,
             transaction_date=self.reference_date,
-            category=TransactionCategory.TRANSFER,
+            category=TransactionCategory.TRANSFER_OUT,
             amount="100.00",
         )
 
@@ -86,6 +86,30 @@ class DashboardAPITests(APITestCase):
         self.assertEqual(len(data["spending_by_category"]), 1)
         self.assertEqual(data["spending_by_category"][0]["category"], TransactionCategory.GROCERIES)
         self.assertEqual(data["spending_by_category"][0]["total"], "42.50")
+
+    def test_dashboard_monthly_income_includes_other_income(self):
+        account = Account.objects.create(
+            institution=self.institution,
+            name="Current",
+            account_type=AccountType.CURRENT,
+        )
+        Transaction.objects.create(
+            account=account,
+            transaction_date=self.reference_date,
+            category=TransactionCategory.OTHER_INCOME,
+            amount="100.00",
+        )
+        Transaction.objects.create(
+            account=account,
+            transaction_date=self.reference_date,
+            category=TransactionCategory.SALARY,
+            amount="50.00",
+        )
+
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()["monthly_income"], "150.00")
 
     def test_dashboard_includes_goals_summary(self):
         account = Account.objects.create(

@@ -9,3 +9,11 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = "__all__"
+
+    def validate_amount(self, value):
+        if value <= 0:
+            raise serializers.ValidationError(
+                "Amount must be greater than zero. Use category to record income or expenses."
+            )
+
+        return value

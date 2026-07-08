@@ -1,12 +1,13 @@
+import { APP_CURRENCY, APP_LOCALE } from '@/config/locale';
 import { ACCOUNT_TYPE_LABELS, type AccountType } from '@/types/account';
 import { TRANSACTION_CATEGORY_LABELS, type TransactionCategory } from '@/types/transaction';
 
 export function formatCurrency(amount: string | number): string {
     const value = typeof amount === 'string' ? parseFloat(amount) : amount;
 
-    return new Intl.NumberFormat('en-GB', {
+    return new Intl.NumberFormat(APP_LOCALE, {
         style: 'currency',
-        currency: 'GBP',
+        currency: APP_CURRENCY,
     }).format(value);
 }
 
@@ -19,7 +20,7 @@ export function formatTransactionCategory(category: TransactionCategory): string
 }
 
 export function formatDate(value: string): string {
-    return new Intl.DateTimeFormat('en-GB', {
+    return new Intl.DateTimeFormat(APP_LOCALE, {
         day: 'numeric',
         month: 'short',
         year: 'numeric',
