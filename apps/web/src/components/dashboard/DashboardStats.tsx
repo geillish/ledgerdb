@@ -1,13 +1,14 @@
 import { Target, TrendingDown, TrendingUp, Wallet } from 'lucide-react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { APP_LOCALE } from '@/config/locale';
 import { formatCurrency } from '@/lib/format';
 import type { Dashboard } from '@/types/dashboard';
 
 function formatMonth(value: string): string {
     const [year, month] = value.split('-');
 
-    return new Intl.DateTimeFormat('en-GB', {
+    return new Intl.DateTimeFormat(APP_LOCALE, {
         month: 'long',
         year: 'numeric',
     }).format(new Date(Number(year), Number(month) - 1, 1));

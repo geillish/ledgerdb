@@ -1,4 +1,4 @@
-import { Progress, ProgressValue } from '@/components/ui/progress';
+import { Progress } from '@/components/ui/progress';
 import { formatCurrency } from '@/lib/format';
 import { getGoalProgressPercent } from '@/lib/goal';
 
@@ -12,9 +12,10 @@ export function GoalProgress({ currentAmount, targetAmount }: GoalProgressProps)
 
     return (
         <div className="min-w-40 space-y-2">
-            <Progress value={percent}>
-                <ProgressValue>{() => `${percent}%`}</ProgressValue>
-            </Progress>
+            <div className="flex items-center gap-3">
+                <Progress value={percent} className="flex-1" />
+                <span className="shrink-0 text-xs text-muted-foreground tabular-nums">{percent}%</span>
+            </div>
             <p className="text-xs text-muted-foreground tabular-nums">
                 {formatCurrency(currentAmount)} of {formatCurrency(targetAmount)}
             </p>

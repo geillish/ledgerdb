@@ -2,6 +2,7 @@
 
 import { useActionState } from 'react';
 
+import { TransactionCategorySelect } from '@/components/transactions/TransactionCategorySelect';
 import { updateTransaction } from '@/actions/transaction';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -11,7 +12,8 @@ import { Select } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { initialActionState } from '@/lib/action-state';
 import { fieldError } from '@/lib/errors';
-import { TRANSACTION_CATEGORY_LABELS, TRANSACTION_CATEGORIES, type Transaction } from '@/types/transaction';
+import { getTransactionDirectionLabel } from '@/lib/transaction';
+import type { Transaction } from '@/types/transaction';
 import type { Account } from '@/types/account';
 
 type EditTransactionDialogProps = {
@@ -29,7 +31,7 @@ export function EditTransactionDialog({ transaction, accounts, open, onOpenChang
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle>Edit transaction</DialogTitle>
-                    <DialogDescription>Update transaction details.</DialogDescription>
+                    <DialogDescription>Enter positive amounts only. Category decides whether money is added or subtracted.</DialogDescription>
                 </DialogHeader>
                 <form key={transaction.id} action={formAction} className="space-y-5">
                     {state.message && <p className="text-sm text-destructive">{state.message}</p>}
@@ -51,17 +53,12 @@ export function EditTransactionDialog({ transaction, accounts, open, onOpenChang
                     </Field>
 
                     <Field label="Category" id={`transaction-category-${transaction.id}`} error={fieldError(state.errors, 'category')}>
-                        <Select id={`transaction-category-${transaction.id}`} name="category" required defaultValue={transaction.category}>
-                            {TRANSACTION_CATEGORIES.map(category => (
-                                <option key={category} value={category}>
-                                    {TRANSACTION_CATEGORY_LABELS[category]}
-                                </option>
-                            ))}
-                        </Select>
+                        <TransactionCategorySelect id={`transaction-category-${transaction.id}`} defaultValue={transaction.category} />
+                        <p className="text-xs text-muted-foreground">{getTransactionDirectionLabel(transaction.category)}</p>
                     </Field>
 
                     <Field label="Amount" id={`transaction-amount-${transaction.id}`} error={fieldError(state.errors, 'amount')}>
-                        <Input id={`transaction-amount-${transaction.id}`} name="amount" type="number" step="0.01" required defaultValue={transaction.amount} />
+                        <Input id={`transaction-amount-${transaction.id}`} name="amount" type="number" step="0.01" min="0.01" required defaultValue={transaction.amount} />
                     </Field>
 
                     <Field label="Note" id={`transaction-note-${transaction.id}`} error={fieldError(state.errors, 'note')}>

@@ -3,6 +3,7 @@
 import { Plus } from 'lucide-react';
 import { useActionState } from 'react';
 
+import { TransactionCategorySelect } from '@/components/transactions/TransactionCategorySelect';
 import { createTransaction } from '@/actions/transaction';
 import { Button } from '@/components/ui/button';
 import { ButtonLink } from '@/components/ui/button-link';
@@ -15,7 +16,6 @@ import { routes } from '@/config/routes';
 import { initialActionState } from '@/lib/action-state';
 import { fieldError } from '@/lib/errors';
 import { cn } from '@/lib/utils';
-import { TRANSACTION_CATEGORY_LABELS, TRANSACTION_CATEGORIES } from '@/types/transaction';
 import type { Account } from '@/types/account';
 
 export function CreateTransactionDialog({ accounts, defaultDate, label = 'Add transaction', className }: { accounts: Account[]; defaultDate: string; label?: string; className?: string }) {
@@ -33,7 +33,7 @@ export function CreateTransactionDialog({ accounts, defaultDate, label = 'Add tr
                     <>
                         <DialogHeader>
                             <DialogTitle>New transaction</DialogTitle>
-                            <DialogDescription>Record income, spending, or a transfer.</DialogDescription>
+                            <DialogDescription>Enter positive amounts only. Category decides whether money is added (income) or subtracted (expense).</DialogDescription>
                         </DialogHeader>
                         <form action={formAction} className="space-y-5">
                             {state.message && <p className="text-sm text-destructive">{state.message}</p>}
@@ -56,17 +56,13 @@ export function CreateTransactionDialog({ accounts, defaultDate, label = 'Add tr
                             </Field>
 
                             <Field label="Category" id="transaction-category" error={fieldError(state.errors, 'category')}>
-                                <Select id="transaction-category" name="category" required defaultValue="GROCERIES">
-                                    {TRANSACTION_CATEGORIES.map(category => (
-                                        <option key={category} value={category}>
-                                            {TRANSACTION_CATEGORY_LABELS[category]}
-                                        </option>
-                                    ))}
-                                </Select>
+                                <TransactionCategorySelect id="transaction-category" defaultValue="SHOPPING" />
+                                <p className="text-xs text-muted-foreground">Shopping and other expenses subtract from your balance. Salary adds to it.</p>
                             </Field>
 
                             <Field label="Amount" id="transaction-amount" error={fieldError(state.errors, 'amount')}>
-                                <Input id="transaction-amount" name="amount" type="number" step="0.01" required placeholder="0.00" />
+                                <Input id="transaction-amount" name="amount" type="number" step="0.01" min="0.01" required placeholder="500.00" />
+                                <p className="text-xs text-muted-foreground">Always enter a positive number, e.g. 500 for a €500 shopping trip.</p>
                             </Field>
 
                             <Field label="Note" id="transaction-note" error={fieldError(state.errors, 'note')}>

@@ -4,6 +4,7 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart';
+import { APP_LOCALE } from '@/config/locale';
 import { formatCurrency, formatTransactionCategory } from '@/lib/format';
 import type { DashboardCategorySpending } from '@/types/dashboard';
 
@@ -17,7 +18,7 @@ const chartConfig = {
 function formatMonth(value: string): string {
     const [year, month] = value.split('-');
 
-    return new Intl.DateTimeFormat('en-GB', {
+    return new Intl.DateTimeFormat(APP_LOCALE, {
         month: 'long',
         year: 'numeric',
     }).format(new Date(Number(year), Number(month) - 1, 1));
