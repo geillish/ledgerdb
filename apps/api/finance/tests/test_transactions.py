@@ -7,6 +7,7 @@ from rest_framework.test import APITestCase
 
 from finance.choices import AccountType, TransactionCategory
 from finance.models import Account, Institution, Transaction
+from finance.tests.helpers import paginated_count, paginated_results
 
 
 class TransactionAPITests(APITestCase):
@@ -32,7 +33,8 @@ class TransactionAPITests(APITestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json(), [])
+        self.assertEqual(paginated_count(response), 0)
+        self.assertEqual(paginated_results(response), [])
 
     def test_list_includes_account_name(self):
         Transaction.objects.create(
@@ -46,7 +48,8 @@ class TransactionAPITests(APITestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        data = response.json()
+        data = paginated_results(response)
+        self.assertEqual(paginated_count(response), 1)
         self.assertEqual(len(data), 1)
         self.assertEqual(data[0]["account"], str(self.account.pk))
         self.assertEqual(data[0]["account_name"], "Current")
@@ -243,8 +246,8 @@ class TransactionAPITests(APITestCase):
         response = self.client.get(self.list_url, {"account": str(self.account.pk)})
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json()[0]["account_name"], "Current")
+        self.assertEqual(paginated_count(response), 1)
+        self.assertEqual(paginated_results(response)[0]["account_name"], "Current")
 
     def test_filter_by_category(self):
         Transaction.objects.create(
@@ -263,5 +266,23 @@ class TransactionAPITests(APITestCase):
         response = self.client.get(self.list_url, {"category": TransactionCategory.SALARY})
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json()[0]["category"], TransactionCategory.SALARY)
+        self.assertEqual(paginated_count(response), 1)
+        self.assertEqual(paginated_results(response)[0]["category"], TransactionCategory.SALARY)
+
+    def test_list_is_paginated(self):
+        for index in range(30):
+            Transaction.objects.create(
+                account=self.account,
+                transaction_date=date(2025, 6, 1),
+                category=TransactionCategory.GROCERIES,
+                amount=f"{index + 1}.00",
+            )
+
+        first_page = self.client.get(self.list_url)
+        second_page = self.client.get(self.list_url, {"page": 2})
+
+        self.assertEqual(first_page.status_code, status.HTTP_200_OK)
+        self.assertEqual(second_page.status_code, status.HTTP_200_OK)
+        self.assertEqual(paginated_count(first_page), 30)
+        self.assertEqual(len(paginated_results(first_page)), 25)
+        self.assertEqual(len(paginated_results(second_page)), 5)

@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from finance.models import Institution
+from finance.tests.helpers import paginated_count, paginated_results
 
 
 class InstitutionAPITests(APITestCase):
@@ -13,7 +14,8 @@ class InstitutionAPITests(APITestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json(), [])
+        self.assertEqual(paginated_count(response), 0)
+        self.assertEqual(paginated_results(response), [])
 
     def test_create_institution(self):
         response = self.client.post(self.list_url, {"name": "Barclays"}, format="json")
@@ -58,8 +60,8 @@ class InstitutionAPITests(APITestCase):
         response = self.client.get(self.list_url, {"search": "mon"})
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json()[0]["name"], "Monzo")
+        self.assertEqual(paginated_count(response), 1)
+        self.assertEqual(paginated_results(response)[0]["name"], "Monzo")
 
     def test_delete_institution(self):
         institution = Institution.objects.create(name="Barclays")

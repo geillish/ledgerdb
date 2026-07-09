@@ -6,6 +6,7 @@ from rest_framework.test import APITestCase
 
 from finance.choices import AccountType
 from finance.models import Account, Institution
+from finance.tests.helpers import paginated_count, paginated_results
 
 
 class AccountAPITests(APITestCase):
@@ -17,7 +18,8 @@ class AccountAPITests(APITestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json(), [])
+        self.assertEqual(paginated_count(response), 0)
+        self.assertEqual(paginated_results(response), [])
 
     def test_list_includes_institution_name(self):
         Account.objects.create(
@@ -30,7 +32,8 @@ class AccountAPITests(APITestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        data = response.json()
+        data = paginated_results(response)
+        self.assertEqual(paginated_count(response), 1)
         self.assertEqual(len(data), 1)
         self.assertEqual(data[0]["name"], "Current")
         self.assertEqual(data[0]["institution"], str(self.institution.pk))

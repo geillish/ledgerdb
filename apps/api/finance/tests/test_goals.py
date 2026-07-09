@@ -6,6 +6,7 @@ from rest_framework.test import APITestCase
 
 from finance.choices import AccountType
 from finance.models import Account, Goal, Institution
+from finance.tests.helpers import paginated_count, paginated_results
 
 
 class GoalAPITests(APITestCase):
@@ -23,7 +24,8 @@ class GoalAPITests(APITestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json(), [])
+        self.assertEqual(paginated_count(response), 0)
+        self.assertEqual(paginated_results(response), [])
 
     def test_list_includes_account_name_and_current_amount(self):
         Goal.objects.create(
@@ -35,7 +37,8 @@ class GoalAPITests(APITestCase):
         response = self.client.get(self.list_url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        data = response.json()
+        data = paginated_results(response)
+        self.assertEqual(paginated_count(response), 1)
         self.assertEqual(len(data), 1)
         self.assertEqual(data[0]["name"], "Emergency fund")
         self.assertEqual(data[0]["account_name"], "Savings")
@@ -124,5 +127,5 @@ class GoalAPITests(APITestCase):
         response = self.client.get(self.list_url, {"account": str(self.account.pk)})
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json()[0]["name"], "Savings goal")
+        self.assertEqual(paginated_count(response), 1)
+        self.assertEqual(paginated_results(response)[0]["name"], "Savings goal")

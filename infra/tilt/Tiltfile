@@ -9,7 +9,7 @@ ROOT = "../.."
 # --- API (Django) ---
 local_resource(
     "api",
-    serve_cmd="cd ../../apps/api && uv run python manage.py runserver 8000",
+    serve_cmd="cd ../../apps/api && uv run manage.py runserver 8000",
     deps=["../../apps/api"],
     links=[link("http://localhost:8000", "Django REST API")],
 )
