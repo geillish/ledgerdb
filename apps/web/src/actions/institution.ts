@@ -9,12 +9,43 @@ import { formDataToObject, getApiErrorMessage, getApiFieldErrors } from '@/lib/e
 import { api } from '@/lib/api';
 import { createInstitutionSchema, updateInstitutionSchema } from '@/lib/schemas/institution';
 import type { CreateInstitutionInput, Institution, UpdateInstitutionInput } from '@/types/institution';
+import { DROPDOWN_PAGE_SIZE, type PaginatedResponse } from '@/types/pagination';
+
+type InstitutionListOptions = {
+    search?: string;
+    page?: number;
+};
+
+export async function listInstitutions(options?: InstitutionListOptions): Promise<PaginatedResponse<Institution>> {
+    const params: Record<string, string | number> = {};
+
+    if (options?.search) {
+        params.search = options.search;
+    }
+
+    if (options?.page) {
+        params.page = options.page;
+    }
+
+    const { data } = await api.get<PaginatedResponse<Institution>>('/institutions/', {
+        params: Object.keys(params).length > 0 ? params : undefined,
+    });
+
+    return data;
+}
 
 export async function getInstitutions(search?: string): Promise<Institution[]> {
-    const { data } = await api.get<Institution[]>('/institutions/', {
-        params: search ? { search } : undefined,
-    });
-    return data;
+    const params: Record<string, string | number> = {
+        page_size: DROPDOWN_PAGE_SIZE,
+    };
+
+    if (search) {
+        params.search = search;
+    }
+
+    const { data } = await api.get<PaginatedResponse<Institution>>('/institutions/', { params });
+
+    return data.results;
 }
 
 export async function getInstitution(id: string): Promise<Institution> {

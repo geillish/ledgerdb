@@ -23,4 +23,5 @@ export type UpdateGoalInput = CreateGoalInput;
 
 export type GoalFilters = {
     account?: string;
+    page?: number;
 };

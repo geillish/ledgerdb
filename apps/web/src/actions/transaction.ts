@@ -9,9 +9,10 @@ import { formDataToObject, getApiErrorMessage, getApiFieldErrors } from '@/lib/e
 import { api } from '@/lib/api';
 import { createTransactionSchema, updateTransactionSchema } from '@/lib/schemas/transaction';
 import type { CreateTransactionInput, Transaction, TransactionFilters, UpdateTransactionInput } from '@/types/transaction';
+import { DROPDOWN_PAGE_SIZE, type PaginatedResponse } from '@/types/pagination';
 
-export async function getTransactions(filters?: TransactionFilters): Promise<Transaction[]> {
-    const params: TransactionFilters = {};
+export async function listTransactions(filters?: TransactionFilters): Promise<PaginatedResponse<Transaction>> {
+    const params: Record<string, string | number> = {};
 
     if (filters?.account) {
         params.account = filters.account;
@@ -21,11 +22,33 @@ export async function getTransactions(filters?: TransactionFilters): Promise<Tra
         params.category = filters.category;
     }
 
-    const { data } = await api.get<Transaction[]>('/transactions/', {
+    if (filters?.page) {
+        params.page = filters.page;
+    }
+
+    const { data } = await api.get<PaginatedResponse<Transaction>>('/transactions/', {
         params: Object.keys(params).length > 0 ? params : undefined,
     });
 
     return data;
+}
+
+export async function getTransactions(filters?: Omit<TransactionFilters, 'page'>): Promise<Transaction[]> {
+    const params: Record<string, string | number> = {
+        page_size: DROPDOWN_PAGE_SIZE,
+    };
+
+    if (filters?.account) {
+        params.account = filters.account;
+    }
+
+    if (filters?.category) {
+        params.category = filters.category;
+    }
+
+    const { data } = await api.get<PaginatedResponse<Transaction>>('/transactions/', { params });
+
+    return data.results;
 }
 
 export async function createTransaction(_prevState: ActionState = initialActionState, formData: FormData): Promise<ActionState> {

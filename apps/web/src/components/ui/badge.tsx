@@ -13,7 +13,17 @@ const badgeVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80",
         destructive:
-          "bg-destructive/10 text-destructive focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20",
+          "border-red-200 bg-red-100 text-red-800 focus-visible:ring-red-200 dark:border-red-900 dark:bg-red-950 dark:text-red-300 dark:focus-visible:ring-red-900 [a]:hover:bg-red-200/80 dark:[a]:hover:bg-red-900/80",
+        success:
+          "border-emerald-200 bg-emerald-100 text-emerald-800 focus-visible:ring-emerald-200 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 dark:focus-visible:ring-emerald-800 [a]:hover:bg-emerald-200/80 dark:[a]:hover:bg-emerald-900/80",
+        info:
+          "border-sky-200 bg-sky-100 text-sky-800 focus-visible:ring-sky-200 dark:border-sky-800 dark:bg-sky-950 dark:text-sky-300 dark:focus-visible:ring-sky-800 [a]:hover:bg-sky-200/80 dark:[a]:hover:bg-sky-900/80",
+        warning:
+          "border-amber-200 bg-amber-100 text-amber-900 focus-visible:ring-amber-200 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300 dark:focus-visible:ring-amber-800 [a]:hover:bg-amber-200/80 dark:[a]:hover:bg-amber-900/80",
+        violet:
+          "border-violet-200 bg-violet-100 text-violet-800 focus-visible:ring-violet-200 dark:border-violet-800 dark:bg-violet-950 dark:text-violet-300 dark:focus-visible:ring-violet-800 [a]:hover:bg-violet-200/80 dark:[a]:hover:bg-violet-900/80",
+        muted:
+          "border-stone-300 bg-stone-100 text-stone-700 focus-visible:ring-stone-300 dark:border-stone-600 dark:bg-stone-800 dark:text-stone-200 dark:focus-visible:ring-stone-600 [a]:hover:bg-stone-200/80 dark:[a]:hover:bg-stone-700/80",
         outline:
           "border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
         ghost:

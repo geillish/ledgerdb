@@ -65,4 +65,5 @@ export type UpdateTransactionInput = CreateTransactionInput;
 export type TransactionFilters = {
     account?: string;
     category?: string;
+    page?: number;
 };

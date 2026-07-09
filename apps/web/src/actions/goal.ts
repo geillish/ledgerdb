@@ -9,19 +9,38 @@ import { formDataToObject, getApiErrorMessage, getApiFieldErrors } from '@/lib/e
 import { api } from '@/lib/api';
 import { createGoalSchema, updateGoalSchema } from '@/lib/schemas/goal';
 import type { CreateGoalInput, Goal, GoalFilters, UpdateGoalInput } from '@/types/goal';
+import { DROPDOWN_PAGE_SIZE, type PaginatedResponse } from '@/types/pagination';
 
-export async function getGoals(filters?: GoalFilters): Promise<Goal[]> {
-    const params: GoalFilters = {};
+export async function listGoals(filters?: GoalFilters): Promise<PaginatedResponse<Goal>> {
+    const params: Record<string, string | number> = {};
 
     if (filters?.account) {
         params.account = filters.account;
     }
 
-    const { data } = await api.get<Goal[]>('/goals/', {
+    if (filters?.page) {
+        params.page = filters.page;
+    }
+
+    const { data } = await api.get<PaginatedResponse<Goal>>('/goals/', {
         params: Object.keys(params).length > 0 ? params : undefined,
     });
 
     return data;
+}
+
+export async function getGoals(filters?: Omit<GoalFilters, 'page'>): Promise<Goal[]> {
+    const params: Record<string, string | number> = {
+        page_size: DROPDOWN_PAGE_SIZE,
+    };
+
+    if (filters?.account) {
+        params.account = filters.account;
+    }
+
+    const { data } = await api.get<PaginatedResponse<Goal>>('/goals/', { params });
+
+    return data.results;
 }
 
 export async function createGoal(_prevState: ActionState = initialActionState, formData: FormData): Promise<ActionState> {

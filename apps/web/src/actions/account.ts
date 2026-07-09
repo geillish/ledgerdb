@@ -9,10 +9,22 @@ import { formDataToObject, getApiErrorMessage, getApiFieldErrors } from '@/lib/e
 import { api } from '@/lib/api';
 import { createAccountSchema, updateAccountSchema } from '@/lib/schemas/account';
 import type { Account, CreateAccountInput, UpdateAccountInput } from '@/types/account';
+import { DROPDOWN_PAGE_SIZE, type PaginatedResponse } from '@/types/pagination';
+
+export async function listAccounts(page = 1): Promise<PaginatedResponse<Account>> {
+    const { data } = await api.get<PaginatedResponse<Account>>('/accounts/', {
+        params: { page },
+    });
+
+    return data;
+}
 
 export async function getAccounts(): Promise<Account[]> {
-    const { data } = await api.get<Account[]>('/accounts/');
-    return data;
+    const { data } = await api.get<PaginatedResponse<Account>>('/accounts/', {
+        params: { page_size: DROPDOWN_PAGE_SIZE },
+    });
+
+    return data.results;
 }
 
 export async function createAccount(_prevState: ActionState = initialActionState, formData: FormData): Promise<ActionState> {
