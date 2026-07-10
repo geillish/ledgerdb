@@ -1,4 +1,4 @@
-import { ArrowLeftRight, Building2, LayoutDashboard, Target, Wallet, type LucideIcon } from 'lucide-react';
+import { ArrowLeftRight, Building2, CalendarClock, LayoutDashboard, Target, Wallet, type LucideIcon } from 'lucide-react';
 
 import { routes } from '@/config/routes';
 
@@ -33,6 +33,12 @@ export const navigation: NavItem[] = [
         description: 'Review income, spending, and transfers over time.',
         href: routes.transactions,
         icon: ArrowLeftRight,
+    },
+    {
+        title: 'Recurring',
+        description: 'Manage monthly salary, bills, and other repeating payments.',
+        href: routes.recurring,
+        icon: CalendarClock,
     },
     {
         title: 'Goals',

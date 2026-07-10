@@ -7,6 +7,7 @@ from finance.views import (
     DashboardView,
     GoalViewSet,
     InstitutionViewSet,
+    RecurringTransactionViewSet,
     TransactionViewSet,
 )
 
@@ -15,6 +16,7 @@ router = DefaultRouter()
 router.register("institutions", InstitutionViewSet)
 router.register("accounts", AccountViewSet)
 router.register("transactions", TransactionViewSet)
+router.register("recurring-transactions", RecurringTransactionViewSet)
 router.register("goals", GoalViewSet)
 
 urlpatterns = [

@@ -38,6 +38,10 @@ class Account(UUIDModel, TimeStampedModel):
         blank=True,
     )
 
+    include_in_spendable = models.BooleanField(
+        default=True,
+    )
+
     class Meta:
         ordering = ["name"]
 

@@ -6,6 +6,7 @@ export const routes = {
     institutionsNew: '/institutions/new',
     transactions: '/transactions',
     transactionsNew: '/transactions/new',
+    recurring: '/recurring',
     goals: '/goals',
     goalsNew: '/goals/new',
     dashboard: '/dashboard',
