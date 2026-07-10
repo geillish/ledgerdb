@@ -112,10 +112,10 @@ web/src/
 | Endpoint | Description |
 |----------|-------------|
 | `GET /api/dashboard/` | Aggregated financial overview |
-| `/api/institutions/` | Institution CRUD; `?search=` filter |
-| `/api/accounts/` | Account CRUD |
-| `/api/transactions/` | Transaction CRUD; `?account=`, `?category=` filters |
-| `/api/goals/` | Goal CRUD; `?account=` filter |
+| `/api/institutions/` | Institution CRUD; `?search=` filter; paginated (25 per page) |
+| `/api/accounts/` | Account CRUD; paginated (25 per page) |
+| `/api/transactions/` | Transaction CRUD; `?account=`, `?category=` filters; paginated (25 per page) |
+| `/api/goals/` | Goal CRUD; `?account=` filter; paginated (25 per page) |
 | `/admin/` | Django admin for all models |
 
 Serializers expose read-only related names (`institution_name`, `account_name`, `current_amount` on goals).
@@ -161,8 +161,29 @@ DATABASES["default"].update({
 Run migrations and start the server:
 
 ```bash
-uv run python manage.py migrate
-uv run python manage.py runserver
+uv run manage.py migrate
+uv run manage.py runserver
+```
+
+### Demo data (portfolio / hosted deploys)
+
+Populate the database with fictional institutions, accounts, goals, and six months of transactions:
+
+```bash
+uv run manage.py seed_demo_data --reset
+```
+
+This creates:
+
+- 3 institutions (Metro Credit Union, Everyday Pay, Horizon Investments)
+- 6 accounts (current, savings pots, credit card, pension)
+- 3 savings goals with progress tied to account balances
+- 6 months of salary, expenses, transfers, and credit card spending
+
+To add transactions only to an existing current account:
+
+```bash
+uv run manage.py seed_demo_transactions
 ```
 
 The API is available at [http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/).
@@ -198,7 +219,7 @@ Use [http://localhost:8080](http://localhost:8080) — Caddy routes `/` to Next.
 cd apps/api
 
 # Run tests (SQLite in-memory)
-DJANGO_SETTINGS_MODULE=config.settings_test uv run python manage.py test finance
+DJANGO_SETTINGS_MODULE=config.settings_test uv run manage.py test finance
 
 # Lint and format
 ruff check --config ruff.toml .
@@ -226,5 +247,4 @@ GitHub Actions runs on push and pull requests:
 
 - Authentication and multi-user support
 - CORS (all API calls are server-side)
-- Pagination and API filtering package
-- Automatic account balance updates from transactions
+- API filtering package
