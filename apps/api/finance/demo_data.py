@@ -189,3 +189,83 @@ PENSION_CONTRIBUTIONS = (
     (date(2026, 6, 30), "250.00"),
     (date(2026, 7, 7), "250.00"),
 )
+
+RECURRING_TRANSACTIONS = (
+    {
+        "account": "Main Current Account",
+        "category": TransactionCategory.SALARY,
+        "amount": Decimal("3500.00"),
+        "note": "Monthly salary",
+        "day_of_month": 28,
+    },
+    {
+        "account": "Main Current Account",
+        "category": TransactionCategory.RENT,
+        "amount": Decimal("1250.00"),
+        "note": "Rent",
+        "day_of_month": 1,
+    },
+    {
+        "account": "Main Current Account",
+        "category": TransactionCategory.BILLS,
+        "amount": Decimal("215.00"),
+        "note": "Utilities",
+        "day_of_month": 9,
+    },
+    {
+        "account": "Main Current Account",
+        "category": TransactionCategory.TRANSFER_OUT,
+        "amount": Decimal("200.00"),
+        "note": "Emergency savings",
+        "day_of_month": 2,
+    },
+    {
+        "account": "Emergency Savings",
+        "category": TransactionCategory.TRANSFER_IN,
+        "amount": Decimal("200.00"),
+        "note": "Emergency savings",
+        "day_of_month": 2,
+    },
+    {
+        "account": "Main Current Account",
+        "category": TransactionCategory.TRANSFER_OUT,
+        "amount": Decimal("100.00"),
+        "note": "Holiday savings",
+        "day_of_month": 2,
+    },
+    {
+        "account": "Holiday Pot",
+        "category": TransactionCategory.TRANSFER_IN,
+        "amount": Decimal("100.00"),
+        "note": "Holiday savings",
+        "day_of_month": 2,
+    },
+    {
+        "account": "Main Current Account",
+        "category": TransactionCategory.TRANSFER_OUT,
+        "amount": Decimal("75.00"),
+        "note": "Laptop savings",
+        "day_of_month": 2,
+    },
+    {
+        "account": "Laptop Pot",
+        "category": TransactionCategory.TRANSFER_IN,
+        "amount": Decimal("75.00"),
+        "note": "Laptop savings",
+        "day_of_month": 2,
+    },
+    {
+        "account": "Main Current Account",
+        "category": TransactionCategory.TRANSFER_OUT,
+        "amount": Decimal("250.00"),
+        "note": "Pension contribution",
+        "day_of_month": 28,
+    },
+    {
+        "account": "Pension Fund",
+        "category": TransactionCategory.TRANSFER_IN,
+        "amount": Decimal("250.00"),
+        "note": "Pension contribution",
+        "day_of_month": 28,
+    },
+)

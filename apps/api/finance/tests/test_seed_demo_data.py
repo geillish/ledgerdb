@@ -3,7 +3,7 @@ from io import StringIO
 from django.core.management import call_command
 from django.test import TestCase
 
-from finance.models import Account, Goal, Institution, Transaction
+from finance.models import Account, Goal, Institution, RecurringTransaction, Transaction
 
 
 class SeedDemoDataCommandTests(TestCase):
@@ -15,6 +15,7 @@ class SeedDemoDataCommandTests(TestCase):
         self.assertEqual(Account.objects.count(), 6)
         self.assertEqual(Goal.objects.count(), 3)
         self.assertGreater(Transaction.objects.count(), 50)
+        self.assertEqual(RecurringTransaction.objects.count(), 11)
         self.assertIn("Demo data ready", out.getvalue())
 
     def test_seed_demo_data_reset_replaces_existing_data(self):

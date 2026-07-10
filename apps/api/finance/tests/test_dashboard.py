@@ -28,6 +28,7 @@ class DashboardAPITests(APITestCase):
         self.assertEqual(data["spending_by_category"], [])
         self.assertEqual(len(data["spending_by_month"]), 6)
         self.assertEqual(data["goals"], [])
+        self.assertEqual(data["spendable"]["total"], "0.00")
 
     def test_dashboard_calculates_net_worth(self):
         Account.objects.create(

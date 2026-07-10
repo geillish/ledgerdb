@@ -19,6 +19,7 @@ export type Account = {
     name: string;
     account_type: AccountType;
     current_balance: string;
+    include_in_spendable: boolean;
     notes: string;
     date_created: string;
     date_updated: string;
@@ -32,4 +33,6 @@ export type CreateAccountInput = {
     notes?: string;
 };
 
-export type UpdateAccountInput = Omit<CreateAccountInput, 'current_balance'>;
+export type UpdateAccountInput = Omit<CreateAccountInput, 'current_balance'> & {
+    include_in_spendable?: boolean;
+};

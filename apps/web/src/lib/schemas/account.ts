@@ -19,4 +19,8 @@ export const updateAccountSchema = z.object({
     name: z.string().trim().min(1, 'Name is required').max(100),
     account_type: z.enum(ACCOUNT_TYPES),
     notes: z.string().optional(),
+    include_in_spendable: z
+        .union([z.literal('true'), z.literal('false')])
+        .optional()
+        .transform(value => value !== 'false'),
 });

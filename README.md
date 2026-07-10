@@ -22,10 +22,11 @@ The goal was to ship one feature at a time (accounts, then institutions, transac
 
 ## Features
 
-- **Dashboard** — net worth, monthly income and spending, six-month spending trend, category breakdown, account balances, and goal progress
+- **Dashboard** — net worth, monthly income and spending, six-month spending trend, category breakdown, account balances, goal progress, and spendable money
 - **Accounts** — list, create, edit, and delete accounts with type badges and opening balances
 - **Institutions** — CRUD with search; protected delete when accounts are linked
 - **Transactions** — CRUD with category badges and filters by account or category
+- **Recurring payments** — monthly salary, bills, and transfers; auto-post as transactions when due
 - **Goals** — savings targets linked to accounts with progress bars
 
 ## Tech stack
@@ -111,10 +112,11 @@ web/src/
 
 | Endpoint | Description |
 |----------|-------------|
-| `GET /api/dashboard/` | Aggregated financial overview |
+| `GET /api/dashboard/` | Aggregated financial overview including spendable money |
 | `/api/institutions/` | Institution CRUD; `?search=` filter; paginated (25 per page) |
-| `/api/accounts/` | Account CRUD; paginated (25 per page) |
+| `/api/accounts/` | Account CRUD; `include_in_spendable` toggle; paginated (25 per page) |
 | `/api/transactions/` | Transaction CRUD; `?account=`, `?category=` filters; paginated (25 per page) |
+| `/api/recurring-transactions/` | Recurring payment CRUD; `?account=` filter; paginated (25 per page) |
 | `/api/goals/` | Goal CRUD; `?account=` filter; paginated (25 per page) |
 | `/admin/` | Django admin for all models |
 
@@ -178,6 +180,7 @@ This creates:
 - 3 institutions (Metro Credit Union, Everyday Pay, Horizon Investments)
 - 6 accounts (current, savings pots, credit card, pension)
 - 3 savings goals with progress tied to account balances
+- 11 recurring payments (paired transfer in/out, salary, rent, bills)
 - 6 months of salary, expenses, transfers, and credit card spending
 
 To add transactions only to an existing current account:
@@ -224,6 +227,9 @@ DJANGO_SETTINGS_MODULE=config.settings_test uv run manage.py test finance
 # Lint and format
 ruff check --config ruff.toml .
 ruff format --config ruff.toml .
+
+# Process due recurring payments (run daily via cron)
+uv run manage.py process_recurring_transactions
 ```
 
 ### Web

@@ -55,6 +55,7 @@ export async function createAccount(_prevState: ActionState = initialActionState
     }
 
     revalidatePath(routes.accounts);
+    revalidatePath(routes.home);
     redirect(routes.accounts);
 }
 
@@ -76,6 +77,7 @@ export async function updateAccount(_prevState: ActionState = initialActionState
         name: parsed.data.name,
         account_type: parsed.data.account_type,
         notes: parsed.data.notes?.trim() ?? '',
+        include_in_spendable: parsed.data.include_in_spendable,
     };
 
     try {
@@ -91,6 +93,7 @@ export async function updateAccount(_prevState: ActionState = initialActionState
     }
 
     revalidatePath(routes.accounts);
+    revalidatePath(routes.home);
     redirect(routes.accounts);
 }
 
@@ -108,5 +111,6 @@ export async function deleteAccount(_prevState: ActionState = initialActionState
     }
 
     revalidatePath(routes.accounts);
+    revalidatePath(routes.home);
     redirect(routes.accounts);
 }

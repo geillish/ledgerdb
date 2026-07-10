@@ -7,6 +7,7 @@ from core.models import TimeStampedModel, UUIDModel
 from finance.choices import TransactionCategory
 
 from .account import Account
+from .recurring_transaction import RecurringTransaction
 
 
 class Transaction(UUIDModel, TimeStampedModel):
@@ -14,6 +15,14 @@ class Transaction(UUIDModel, TimeStampedModel):
         Account,
         on_delete=models.PROTECT,
         related_name="transactions",
+    )
+
+    recurring_transaction = models.ForeignKey(
+        RecurringTransaction,
+        on_delete=models.SET_NULL,
+        related_name="generated_transactions",
+        null=True,
+        blank=True,
     )
 
     transaction_date = models.DateField()

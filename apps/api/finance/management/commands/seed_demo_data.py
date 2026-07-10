@@ -13,9 +13,11 @@ from finance.demo_data import (
     MONTHLY_SEED_DATA,
     MONTHLY_TRANSFERS,
     PENSION_CONTRIBUTIONS,
+    RECURRING_TRANSACTIONS,
     transaction_date,
 )
-from finance.models import Account, Goal, Institution, Transaction
+from finance.models import Account, Goal, Institution, RecurringTransaction, Transaction
+from finance.spendable import default_include_in_spendable
 
 
 class Command(BaseCommand):
@@ -45,6 +47,7 @@ class Command(BaseCommand):
             accounts = self._seed_accounts(institutions)
             goals_created = self._seed_goals(accounts)
             transactions_created = self._seed_transactions(accounts)
+            recurring_created = self._seed_recurring_transactions(accounts)
 
         self.stdout.write(
             self.style.SUCCESS(
@@ -52,18 +55,20 @@ class Command(BaseCommand):
                 f"{len(institutions)} institutions, "
                 f"{len(accounts)} accounts, "
                 f"{goals_created} goals, "
-                f"{transactions_created} transactions."
+                f"{transactions_created} transactions, "
+                f"{recurring_created} recurring payments."
             )
         )
 
     def _reset_data(self) -> None:
         deleted_transactions, _ = Transaction.objects.all().delete()
+        deleted_recurring, _ = RecurringTransaction.objects.all().delete()
         deleted_goals, _ = Goal.objects.all().delete()
         deleted_accounts, _ = Account.objects.all().delete()
         deleted_institutions, _ = Institution.objects.all().delete()
         self.stdout.write(
-            f"Cleared {deleted_transactions} transactions, {deleted_goals} goals, "
-            f"{deleted_accounts} accounts, {deleted_institutions} institutions."
+            f"Cleared {deleted_transactions} transactions, {deleted_recurring} recurring payments, "
+            f"{deleted_goals} goals, {deleted_accounts} accounts, {deleted_institutions} institutions."
         )
 
     def _seed_institutions(self) -> dict[str, Institution]:
@@ -87,6 +92,9 @@ class Command(BaseCommand):
                     "opening_balance": account_data["opening_balance"],
                     "current_balance": account_data["opening_balance"],
                     "notes": account_data["notes"],
+                    "include_in_spendable": default_include_in_spendable(
+                        account_data["account_type"]
+                    ),
                 },
             )
             accounts[account_data["name"]] = account
@@ -202,5 +210,25 @@ class Command(BaseCommand):
 
         for account in accounts.values():
             sync_account_balance(account.pk)
+
+        return created
+
+    def _seed_recurring_transactions(self, accounts: dict[str, Account]) -> int:
+        created = 0
+
+        for recurring_data in RECURRING_TRANSACTIONS:
+            _, was_created = RecurringTransaction.objects.get_or_create(
+                account=accounts[recurring_data["account"]],
+                note=recurring_data["note"],
+                day_of_month=recurring_data["day_of_month"],
+                defaults={
+                    "category": recurring_data["category"],
+                    "amount": recurring_data["amount"],
+                    "is_active": True,
+                },
+            )
+
+            if was_created:
+                created += 1
 
         return created

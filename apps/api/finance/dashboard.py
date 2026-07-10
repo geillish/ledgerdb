@@ -8,6 +8,7 @@ from django.db.models.functions import TruncMonth
 from finance.category_groups import EXCLUDED_FROM_SPENDING, INCOME_CATEGORIES
 from finance.choices import AccountType
 from finance.models import Account, Goal, Transaction
+from finance.spendable import get_spendable_summary
 
 LIABILITY_ACCOUNT_TYPES = {AccountType.CREDIT_CARD, AccountType.LOAN}
 SPENDING_MONTHS = 6
@@ -209,4 +210,5 @@ def build_dashboard(reference_date: date | None = None) -> dict:
         "spending_by_category": get_spending_by_category(today),
         "spending_by_month": get_spending_by_month(today),
         "goals": get_goals_summary(),
+        "spendable": get_spendable_summary(today),
     }

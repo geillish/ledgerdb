@@ -64,6 +64,20 @@ export function EditAccountDialog({ account, institutions, open, onOpenChange }:
                         <Textarea id={`account-notes-${account.id}`} name="notes" rows={3} placeholder="Optional notes" defaultValue={account.notes} />
                     </Field>
 
+                    <Field label="Spendable balance" id={`account-spendable-${account.id}`}>
+                        <label className="flex items-center gap-2 text-sm">
+                            <input type="hidden" name="include_in_spendable" value="false" />
+                            <input
+                                id={`account-spendable-${account.id}`}
+                                type="checkbox"
+                                name="include_in_spendable"
+                                value="true"
+                                defaultChecked={account.include_in_spendable}
+                            />
+                            Include in spendable money on the dashboard
+                        </label>
+                    </Field>
+
                     <DialogFooter>
                         <DialogClose render={<Button variant="outline" type="button" />}>Cancel</DialogClose>
                         <Button type="submit" disabled={isPending}>
