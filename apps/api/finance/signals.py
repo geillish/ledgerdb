@@ -6,7 +6,7 @@ from finance.models import Transaction
 
 
 @receiver(pre_save, sender=Transaction)
-def cache_previous_transaction(_sender, instance, **_kwargs):
+def cache_previous_transaction(sender, instance, **kwargs):
     if instance.pk:
         instance._balance_previous = Transaction.objects.select_related("account").filter(pk=instance.pk).first()
     else:
@@ -14,7 +14,7 @@ def cache_previous_transaction(_sender, instance, **_kwargs):
 
 
 @receiver(post_save, sender=Transaction)
-def sync_account_balance_on_transaction_save(_sender, instance, created, **_kwargs):
+def sync_account_balance_on_transaction_save(sender, instance, created, **kwargs):
     previous = getattr(instance, "_balance_previous", None)
     previous_account_id = previous.account_id if previous else None
 
@@ -25,5 +25,5 @@ def sync_account_balance_on_transaction_save(_sender, instance, created, **_kwar
 
 
 @receiver(post_delete, sender=Transaction)
-def sync_account_balance_on_transaction_delete(_sender, instance, **_kwargs):
+def sync_account_balance_on_transaction_delete(sender, instance, **kwargs):
     sync_account_balance(instance.account_id)

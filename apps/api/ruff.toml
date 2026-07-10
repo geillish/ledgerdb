@@ -214,6 +214,10 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "RUF005",
 ]
 
+"*/signals.py" = [
+    "ARG001",
+]
+
 [lint.isort]
 known-first-party = ["config", "core", "finance"]
 known-third-party = ["django", "rest_framework"]
