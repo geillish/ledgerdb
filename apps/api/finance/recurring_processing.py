@@ -1,6 +1,8 @@
 from calendar import monthrange
 from datetime import date
 
+from django.utils import timezone
+
 from finance.models import RecurringTransaction, Transaction
 
 
@@ -34,7 +36,7 @@ def should_process_recurring(recurring: RecurringTransaction, reference_date: da
 
 
 def process_recurring_transactions(reference_date: date | None = None) -> list[Transaction]:
-    today = reference_date or date.today()
+    today = reference_date or timezone.localdate()
     created: list[Transaction] = []
 
     for recurring in RecurringTransaction.objects.filter(is_active=True).select_related("account"):

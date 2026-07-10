@@ -20,13 +20,7 @@ export default async function InstitutionsPage({ searchParams }: InstitutionsPag
     const institutionPage = await listInstitutions({ search, page });
     const { results: institutions, count } = institutionPage;
     const hasSearch = Boolean(search?.trim());
-    const summary = hasSearch
-        ? count === 0
-            ? 'No institutions match your search'
-            : formatPaginationSummary(count, page, PAGE_SIZE, 'institution', 'institutions')
-        : count === 0
-          ? 'No institutions yet'
-          : formatPaginationSummary(count, page, PAGE_SIZE, 'institution', 'institutions');
+    const summary = hasSearch ? (count === 0 ? 'No institutions match your search' : formatPaginationSummary(count, page, PAGE_SIZE, 'institution', 'institutions')) : count === 0 ? 'No institutions yet' : formatPaginationSummary(count, page, PAGE_SIZE, 'institution', 'institutions');
 
     return (
         <div className="space-y-8">
@@ -49,12 +43,7 @@ export default async function InstitutionsPage({ searchParams }: InstitutionsPag
             ) : (
                 <DataTableCard>
                     <InstitutionTable institutions={institutions} />
-                    <TablePagination
-                        pathname={routes.institutions}
-                        page={page}
-                        totalCount={count}
-                        searchParams={{ search }}
-                    />
+                    <TablePagination pathname={routes.institutions} page={page} totalCount={count} searchParams={{ search }} />
                 </DataTableCard>
             )}
         </div>

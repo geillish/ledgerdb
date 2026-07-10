@@ -65,13 +65,7 @@ export function EditRecurringDialog({ recurring, accounts, open, onOpenChange }:
                     <Field label="Status" id={`recurring-active-${recurring.id}`}>
                         <label className="flex items-center gap-2 text-sm">
                             <input type="hidden" name="is_active" value="false" />
-                            <input
-                                id={`recurring-active-${recurring.id}`}
-                                type="checkbox"
-                                name="is_active"
-                                value="true"
-                                defaultChecked={recurring.is_active}
-                            />
+                            <input id={`recurring-active-${recurring.id}`} type="checkbox" name="is_active" value="true" defaultChecked={recurring.is_active} />
                             Active
                         </label>
                     </Field>

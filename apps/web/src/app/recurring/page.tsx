@@ -17,10 +17,7 @@ type RecurringPageProps = {
 export default async function RecurringPage({ searchParams }: RecurringPageProps) {
     const { account, page: pageParam } = await searchParams;
     const page = parsePage(pageParam);
-    const [recurringPage, accounts] = await Promise.all([
-        listRecurringTransactions({ account, page }),
-        getAccounts(),
-    ]);
+    const [recurringPage, accounts] = await Promise.all([listRecurringTransactions({ account, page }), getAccounts()]);
     const { results: recurringTransactions, count } = recurringPage;
     const hasFilters = Boolean(account);
     const summary = hasFilters
@@ -44,11 +41,7 @@ export default async function RecurringPage({ searchParams }: RecurringPageProps
                 <Card className="max-w-lg shadow-sm">
                     <CardHeader>
                         <CardTitle>{hasFilters ? 'No results' : 'No recurring payments yet'}</CardTitle>
-                        <CardDescription>
-                            {hasFilters
-                                ? 'Try a different account filter or add a new recurring payment.'
-                                : 'Add salary, rent, subscriptions, and savings transfers to power spendable money on the dashboard.'}
-                        </CardDescription>
+                        <CardDescription>{hasFilters ? 'Try a different account filter or add a new recurring payment.' : 'Add salary, rent, subscriptions, and savings transfers to power spendable money on the dashboard.'}</CardDescription>
                     </CardHeader>
                 </Card>
             ) : (

@@ -2,6 +2,8 @@ from calendar import monthrange
 from datetime import date
 from decimal import Decimal
 
+from django.utils import timezone
+
 from finance.category_groups import INCOME_CATEGORIES
 from finance.choices import AccountType
 from finance.models import Account, RecurringTransaction
@@ -40,7 +42,7 @@ def recurring_occurrence_day(day_of_month: int, reference_date: date) -> int:
 
 
 def get_spendable_summary(reference_date: date | None = None) -> dict:
-    today = reference_date or date.today()
+    today = reference_date or timezone.localdate()
     account_total = Decimal("0.00")
     upcoming_income = Decimal("0.00")
     upcoming_expenses = Decimal("0.00")

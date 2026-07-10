@@ -4,6 +4,7 @@ from decimal import Decimal
 
 from django.db.models import Sum
 from django.db.models.functions import TruncMonth
+from django.utils import timezone
 
 from finance.category_groups import EXCLUDED_FROM_SPENDING, INCOME_CATEGORIES
 from finance.choices import AccountType
@@ -95,24 +96,16 @@ def get_monthly_totals(reference_date: date) -> dict[str, str]:
         monthrange(reference_date.year, reference_date.month)[1],
     )
 
-    spending_total = (
-        Transaction.objects.filter(
-            transaction_date__gte=month_start(reference_date),
-            transaction_date__lte=month_end,
-        )
-        .exclude(category__in=EXCLUDED_FROM_SPENDING)
-        .aggregate(total=Sum("amount"))["total"]
-        or Decimal("0.00")
-    )
+    spending_total = Transaction.objects.filter(
+        transaction_date__gte=month_start(reference_date),
+        transaction_date__lte=month_end,
+    ).exclude(category__in=EXCLUDED_FROM_SPENDING).aggregate(total=Sum("amount"))["total"] or Decimal("0.00")
 
-    income_total = (
-        Transaction.objects.filter(
-            transaction_date__gte=month_start(reference_date),
-            transaction_date__lte=month_end,
-            category__in=INCOME_CATEGORIES,
-        ).aggregate(total=Sum("amount"))["total"]
-        or Decimal("0.00")
-    )
+    income_total = Transaction.objects.filter(
+        transaction_date__gte=month_start(reference_date),
+        transaction_date__lte=month_end,
+        category__in=INCOME_CATEGORIES,
+    ).aggregate(total=Sum("amount"))["total"] or Decimal("0.00")
 
     return {
         "month": month_key(reference_date),
@@ -197,7 +190,7 @@ def get_goals_summary() -> list[dict[str, str]]:
 
 
 def build_dashboard(reference_date: date | None = None) -> dict:
-    today = reference_date or date.today()
+    today = reference_date or timezone.localdate()
     net_worth = get_net_worth()
     monthly_totals = get_monthly_totals(today)
 

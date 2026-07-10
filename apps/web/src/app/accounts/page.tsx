@@ -18,8 +18,7 @@ export default async function AccountsPage({ searchParams }: AccountsPageProps) 
     const page = parsePage(pageParam);
     const [accountPage, institutions] = await Promise.all([listAccounts(page), getInstitutions()]);
     const { results: accounts, count } = accountPage;
-    const summary =
-        count === 0 ? 'No accounts yet' : formatPaginationSummary(count, page, PAGE_SIZE, 'account', 'accounts');
+    const summary = count === 0 ? 'No accounts yet' : formatPaginationSummary(count, page, PAGE_SIZE, 'account', 'accounts');
 
     return (
         <div className="space-y-8">

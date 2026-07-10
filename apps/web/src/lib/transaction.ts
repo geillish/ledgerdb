@@ -5,11 +5,7 @@ export const INCOME_CATEGORIES = ['SALARY', 'OTHER_INCOME'] as const satisfies r
 
 export const TRANSFER_CATEGORIES = ['TRANSFER_IN', 'TRANSFER_OUT'] as const satisfies readonly TransactionCategory[];
 
-export const EXPENSE_CATEGORIES = TRANSACTION_CATEGORIES.filter(
-    category =>
-        !INCOME_CATEGORIES.includes(category as (typeof INCOME_CATEGORIES)[number]) &&
-        !TRANSFER_CATEGORIES.includes(category as (typeof TRANSFER_CATEGORIES)[number]),
-);
+export const EXPENSE_CATEGORIES = TRANSACTION_CATEGORIES.filter(category => !INCOME_CATEGORIES.includes(category as (typeof INCOME_CATEGORIES)[number]) && !TRANSFER_CATEGORIES.includes(category as (typeof TRANSFER_CATEGORIES)[number]));
 
 export type TransactionDirection = 'income' | 'expense' | 'transfer';
 

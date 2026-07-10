@@ -21,13 +21,7 @@ export default async function GoalsPage({ searchParams }: GoalsPageProps) {
     const [goalPage, accounts] = await Promise.all([listGoals({ account, page }), getAccounts()]);
     const { results: goals, count } = goalPage;
     const hasFilters = Boolean(account);
-    const summary = hasFilters
-        ? count === 0
-            ? 'No goals match your filters'
-            : formatPaginationSummary(count, page, PAGE_SIZE, 'goal', 'goals')
-        : count === 0
-          ? 'No goals yet'
-          : formatPaginationSummary(count, page, PAGE_SIZE, 'goal', 'goals');
+    const summary = hasFilters ? (count === 0 ? 'No goals match your filters' : formatPaginationSummary(count, page, PAGE_SIZE, 'goal', 'goals')) : count === 0 ? 'No goals yet' : formatPaginationSummary(count, page, PAGE_SIZE, 'goal', 'goals');
 
     return (
         <div className="space-y-8">

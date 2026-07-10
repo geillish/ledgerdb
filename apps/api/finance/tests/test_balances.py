@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from finance.choices import AccountType, TransactionCategory
-from finance.models import Account, Institution, Transaction
+from finance.models import Account, Institution
 
 
 class BalanceSyncTests(APITestCase):

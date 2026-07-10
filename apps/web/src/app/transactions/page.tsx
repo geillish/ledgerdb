@@ -18,20 +18,11 @@ type TransactionsPageProps = {
 export default async function TransactionsPage({ searchParams }: TransactionsPageProps) {
     const { account, category, page: pageParam } = await searchParams;
     const page = parsePage(pageParam);
-    const [transactionPage, accounts] = await Promise.all([
-        listTransactions({ account, category, page }),
-        getAccounts(),
-    ]);
+    const [transactionPage, accounts] = await Promise.all([listTransactions({ account, category, page }), getAccounts()]);
     const { results: transactions, count } = transactionPage;
     const hasFilters = Boolean(account || category);
     const defaultDate = new Date().toISOString().slice(0, 10);
-    const summary = hasFilters
-        ? count === 0
-            ? 'No transactions match your filters'
-            : formatPaginationSummary(count, page, PAGE_SIZE, 'transaction', 'transactions')
-        : count === 0
-          ? 'No transactions yet'
-          : formatPaginationSummary(count, page, PAGE_SIZE, 'transaction', 'transactions');
+    const summary = hasFilters ? (count === 0 ? 'No transactions match your filters' : formatPaginationSummary(count, page, PAGE_SIZE, 'transaction', 'transactions')) : count === 0 ? 'No transactions yet' : formatPaginationSummary(count, page, PAGE_SIZE, 'transaction', 'transactions');
 
     return (
         <div className="space-y-8">
@@ -54,12 +45,7 @@ export default async function TransactionsPage({ searchParams }: TransactionsPag
             ) : (
                 <DataTableCard>
                     <TransactionTable transactions={transactions} accounts={accounts} />
-                    <TablePagination
-                        pathname={routes.transactions}
-                        page={page}
-                        totalCount={count}
-                        searchParams={{ account, category }}
-                    />
+                    <TablePagination pathname={routes.transactions} page={page} totalCount={count} searchParams={{ account, category }} />
                 </DataTableCard>
             )}
         </div>

@@ -6,13 +6,7 @@ import { formatCurrency } from '@/lib/format';
 import type { Account } from '@/types/account';
 import type { RecurringTransaction } from '@/types/recurring-transaction';
 
-export function RecurringTable({
-    recurringTransactions,
-    accounts,
-}: {
-    recurringTransactions: RecurringTransaction[];
-    accounts: Account[];
-}) {
+export function RecurringTable({ recurringTransactions, accounts }: { recurringTransactions: RecurringTransaction[]; accounts: Account[] }) {
     return (
         <Table>
             <TableHeader>

@@ -10,7 +10,7 @@ LIABILITY_ACCOUNT_TYPES = {AccountType.CREDIT_CARD, AccountType.LOAN}
 def transaction_balance_delta(
     account_type: str,
     category: str,
-    amount: Decimal | str | int | float,
+    amount: Decimal | str | float,
 ) -> Decimal:
     value = abs(Decimal(amount))
 

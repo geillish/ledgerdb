@@ -1,8 +1,6 @@
 from datetime import date
 from decimal import Decimal
 
-from django.urls import reverse
-from rest_framework import status
 from rest_framework.test import APITestCase
 
 from finance.choices import AccountType, TransactionCategory

@@ -18,9 +18,7 @@ class AccountSerializer(serializers.ModelSerializer):
         validated_data["opening_balance"] = balance
 
         if "include_in_spendable" not in validated_data:
-            validated_data["include_in_spendable"] = default_include_in_spendable(
-                validated_data["account_type"]
-            )
+            validated_data["include_in_spendable"] = default_include_in_spendable(validated_data["account_type"])
 
         return super().create(validated_data)
 

@@ -7,21 +7,11 @@ import { initialActionState, zodErrorsToFieldErrors, type ActionState } from '@/
 import { routes } from '@/config/routes';
 import { formDataToObject, getApiErrorMessage, getApiFieldErrors } from '@/lib/errors';
 import { api } from '@/lib/api';
-import {
-    createRecurringTransactionSchema,
-    updateRecurringTransactionSchema,
-} from '@/lib/schemas/recurring-transaction';
+import { createRecurringTransactionSchema, updateRecurringTransactionSchema } from '@/lib/schemas/recurring-transaction';
 import { DROPDOWN_PAGE_SIZE, type PaginatedResponse } from '@/types/pagination';
-import type {
-    CreateRecurringTransactionInput,
-    RecurringTransaction,
-    RecurringTransactionFilters,
-    UpdateRecurringTransactionInput,
-} from '@/types/recurring-transaction';
+import type { CreateRecurringTransactionInput, RecurringTransaction, RecurringTransactionFilters, UpdateRecurringTransactionInput } from '@/types/recurring-transaction';
 
-export async function listRecurringTransactions(
-    filters?: RecurringTransactionFilters,
-): Promise<PaginatedResponse<RecurringTransaction>> {
+export async function listRecurringTransactions(filters?: RecurringTransactionFilters): Promise<PaginatedResponse<RecurringTransaction>> {
     const params: Record<string, string | number> = {};
 
     if (filters?.account) {
@@ -39,9 +29,7 @@ export async function listRecurringTransactions(
     return data;
 }
 
-export async function getRecurringTransactions(
-    filters?: Omit<RecurringTransactionFilters, 'page'>,
-): Promise<RecurringTransaction[]> {
+export async function getRecurringTransactions(filters?: Omit<RecurringTransactionFilters, 'page'>): Promise<RecurringTransaction[]> {
     const params: Record<string, string | number> = {
         page_size: DROPDOWN_PAGE_SIZE,
     };
@@ -57,10 +45,7 @@ export async function getRecurringTransactions(
     return data.results;
 }
 
-export async function createRecurringTransaction(
-    _prevState: ActionState = initialActionState,
-    formData: FormData,
-): Promise<ActionState> {
+export async function createRecurringTransaction(_prevState: ActionState = initialActionState, formData: FormData): Promise<ActionState> {
     const parsed = createRecurringTransactionSchema.safeParse(formDataToObject(formData));
 
     if (!parsed.success) {
@@ -93,10 +78,7 @@ export async function createRecurringTransaction(
     redirect(routes.recurring);
 }
 
-export async function updateRecurringTransaction(
-    _prevState: ActionState = initialActionState,
-    formData: FormData,
-): Promise<ActionState> {
+export async function updateRecurringTransaction(_prevState: ActionState = initialActionState, formData: FormData): Promise<ActionState> {
     const values = formDataToObject(formData);
     const id = values.id;
     const parsed = updateRecurringTransactionSchema.safeParse(values);
@@ -135,10 +117,7 @@ export async function updateRecurringTransaction(
     redirect(routes.recurring);
 }
 
-export async function deleteRecurringTransaction(
-    _prevState: ActionState = initialActionState,
-    formData: FormData,
-): Promise<ActionState> {
+export async function deleteRecurringTransaction(_prevState: ActionState = initialActionState, formData: FormData): Promise<ActionState> {
     const id = formData.get('id');
 
     if (typeof id !== 'string') {

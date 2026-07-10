@@ -11,13 +11,7 @@ type TablePaginationProps = {
     searchParams?: Record<string, string | undefined>;
 };
 
-export function TablePagination({
-    pathname,
-    page,
-    totalCount,
-    pageSize = PAGE_SIZE,
-    searchParams = {},
-}: TablePaginationProps) {
+export function TablePagination({ pathname, page, totalCount, pageSize = PAGE_SIZE, searchParams = {} }: TablePaginationProps) {
     const totalPages = getTotalPages(totalCount, pageSize);
 
     if (totalPages <= 1) {

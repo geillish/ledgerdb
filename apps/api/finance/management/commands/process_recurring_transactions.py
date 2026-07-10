@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 from finance.recurring_processing import process_recurring_transactions
 
@@ -15,14 +16,12 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        reference_date = date.fromisoformat(options["date"]) if options["date"] else date.today()
+        reference_date = date.fromisoformat(options["date"]) if options["date"] else timezone.localdate()
         created = process_recurring_transactions(reference_date)
 
         if created:
             self.stdout.write(
-                self.style.SUCCESS(
-                    f"Created {len(created)} transaction(s) for {reference_date.isoformat()}."
-                )
+                self.style.SUCCESS(f"Created {len(created)} transaction(s) for {reference_date.isoformat()}.")
             )
             for transaction in created:
                 self.stdout.write(f"  - {transaction.account.name}: {transaction.note or transaction.category}")

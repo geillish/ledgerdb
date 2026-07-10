@@ -96,7 +96,6 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                f"Seeded {created} transactions on {account.name}. "
-                f"Balance is now {account.current_balance}."
+                f"Seeded {created} transactions on {account.name}. Balance is now {account.current_balance}."
             )
         )

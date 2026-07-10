@@ -36,11 +36,7 @@ class Command(BaseCommand):
                 self._reset_data()
 
             if Institution.objects.exists() and not options["reset"]:
-                self.stderr.write(
-                    self.style.ERROR(
-                        "Finance data already exists. Re-run with --reset to replace it."
-                    )
-                )
+                self.stderr.write(self.style.ERROR("Finance data already exists. Re-run with --reset to replace it."))
                 return
 
             institutions = self._seed_institutions()
@@ -92,9 +88,7 @@ class Command(BaseCommand):
                     "opening_balance": account_data["opening_balance"],
                     "current_balance": account_data["opening_balance"],
                     "notes": account_data["notes"],
-                    "include_in_spendable": default_include_in_spendable(
-                        account_data["account_type"]
-                    ),
+                    "include_in_spendable": default_include_in_spendable(account_data["account_type"]),
                 },
             )
             accounts[account_data["name"]] = account

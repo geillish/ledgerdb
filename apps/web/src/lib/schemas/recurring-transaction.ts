@@ -10,11 +10,7 @@ export const createRecurringTransactionSchema = z.object({
         .min(1, 'Amount is required')
         .refine(value => Number(value) > 0, 'Amount must be greater than zero'),
     note: z.string().optional(),
-    day_of_month: z.coerce
-        .number()
-        .int('Day must be a whole number')
-        .min(1, 'Day must be between 1 and 28')
-        .max(28, 'Day must be between 1 and 28'),
+    day_of_month: z.coerce.number().int('Day must be a whole number').min(1, 'Day must be between 1 and 28').max(28, 'Day must be between 1 and 28'),
     is_active: z
         .union([z.literal('true'), z.literal('false')])
         .optional()

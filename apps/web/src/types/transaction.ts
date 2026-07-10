@@ -1,22 +1,4 @@
-export const TRANSACTION_CATEGORIES = [
-    'SALARY',
-    'OTHER_INCOME',
-    'TRANSFER_IN',
-    'GROCERIES',
-    'RENT',
-    'MORTGAGE',
-    'BILLS',
-    'TRANSPORT',
-    'SHOPPING',
-    'DINING',
-    'HEALTH',
-    'ENTERTAINMENT',
-    'SAVINGS',
-    'PENSION',
-    'INVESTMENT',
-    'TRANSFER_OUT',
-    'OTHER',
-] as const;
+export const TRANSACTION_CATEGORIES = ['SALARY', 'OTHER_INCOME', 'TRANSFER_IN', 'GROCERIES', 'RENT', 'MORTGAGE', 'BILLS', 'TRANSPORT', 'SHOPPING', 'DINING', 'HEALTH', 'ENTERTAINMENT', 'SAVINGS', 'PENSION', 'INVESTMENT', 'TRANSFER_OUT', 'OTHER'] as const;
 
 export type TransactionCategory = (typeof TRANSACTION_CATEGORIES)[number];
 

@@ -14,13 +14,7 @@ export function getTotalPages(count: number, pageSize = PAGE_SIZE): number {
     return Math.max(1, Math.ceil(count / pageSize));
 }
 
-export function formatPaginationSummary(
-    count: number,
-    page: number,
-    pageSize: number,
-    singular: string,
-    plural: string,
-): string {
+export function formatPaginationSummary(count: number, page: number, pageSize: number, singular: string, plural: string): string {
     if (count === 0) {
         return `No ${plural}`;
     }
